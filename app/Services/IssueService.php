@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Task;
+use App\Models\Issue;
 use Illuminate\Support\Facades\Schema;
 
-class TaskService
+class IssueService
 {
     /**
      * Service Model
@@ -24,11 +24,11 @@ class TaskService
     /**
      * Service Constructor
      *
-     * @param Task $task
+     * @param Issue $issue
      */
-    public function __construct(Task $task)
+    public function __construct(Issue $issue)
     {
-        $this->model = $task;
+        $this->model = $issue;
         $this->pagination = 25;
     }
 
@@ -69,7 +69,7 @@ class TaskService
         $query = $this->model->orderBy('created_at', 'desc');
         $query->where($this->model->primaryKey, 'LIKE', '%'.$payload.'%');
 
-        $columns = Schema::getColumnListing('tasks');
+        $columns = Schema::getColumnListing('issues');
 
         foreach ($columns as $attribute) {
             $query->orWhere($attribute, 'LIKE', '%'.$payload.'%');

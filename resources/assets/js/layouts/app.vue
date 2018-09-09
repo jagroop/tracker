@@ -21,10 +21,10 @@
             <i class="el-icon-info"></i>
             <span slot="title">Issues</span>
           </el-menu-item>
-          <!-- <el-menu-item index="2">
-            <i class="el-icon-info"></i>
+          <el-menu-item index="users">
+            <i class="el-icon-location"></i>
             <span slot="title">Users</span>
-          </el-menu-item> -->
+          </el-menu-item>
         </el-menu>
         <!-- Aside ends -->
       </el-aside>

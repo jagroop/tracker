@@ -18,6 +18,13 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->runningUnitTests()) {
             Schema::defaultStringLength(191);
         }
+        \DB::listen(function ($query) {
+            info([
+                $query->sql,
+                $query->bindings,
+                $query->time
+            ]);
+        });
     }
 
     /**

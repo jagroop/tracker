@@ -65,3 +65,13 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('v1/users', 'Api\UsersController', ['as' => 'api']);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Issue API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::resource('v1/issues', 'Api\IssuesController', ['as' => 'api']);
+});

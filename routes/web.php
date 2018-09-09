@@ -50,3 +50,15 @@ Route::post('users/search', [
     'as' => 'users.search',
     'uses' => 'UsersController@search'
 ]);
+
+/*
+|--------------------------------------------------------------------------
+| Issue Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('issues', 'IssuesController', ['except' => ['show']]);
+Route::post('issues/search', [
+    'as' => 'issues.search',
+    'uses' => 'IssuesController@search'
+]);

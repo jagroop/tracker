@@ -8,15 +8,13 @@ use App\Http\Resources\TaskResource;
 use App\Http\Resources\TaskCollection;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use App\Models\User;
 
 class TestController extends Controller
 {
     public function tasks()
     {
-        $knownDate = Carbon::create(2018, 9, 10, 17);
-        Carbon::setTestNow($knownDate);
-
-        $test = !now()->isWeekend();
-        dd($test);
+        $user = User::find(1);
+        dd($user->todayTasks()->count());
     }
 }

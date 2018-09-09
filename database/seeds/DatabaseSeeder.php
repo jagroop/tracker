@@ -44,7 +44,23 @@ class DatabaseSeeder extends Seeder
                 'task_name' => $faker->name,
                 'task_desc' => $faker->name,
                 'project_id' => array_random([1,2,3,4,5,6,7,8,9,10]),
-                'task_status' => array_random(['done', 'pending', 'in_progress']),
+                'task_status' => array_random(['done', 'closed', 'in_progress']),
+                'assigned_by' => 1,
+                'assigned_to' => 1,
+                'started_date' => now()->toDateTimeString(),
+                'closed_date' => now()->toDateTimeString(),
+                'created_at' => now()->toDateTimeString(),
+                'updated_at' => now()->toDateTimeString(),
+            ]);
+        }
+
+        DB::table('issues')->truncate();
+        foreach (range(1,50) as $index) {
+            DB::table('issues')->insert([
+                'issue_name' => $faker->name,
+                'issue_desc' => $faker->name,
+                'project_id' => array_random([1,2,3,4,5,6,7,8,9,10]),
+                'issue_status' => array_random(['done', 'closed', 'in_progress']),
                 'assigned_by' => 1,
                 'assigned_to' => 1,
                 'started_date' => now()->toDateTimeString(),

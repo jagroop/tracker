@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\UserService;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Resources\UserResource;
+use App\Mail\NewUserCreated;
+use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -22,7 +26,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         $users = $this->service->paginated();
-        return response()->json($users);
+        return UserResource::collection($users);
     }
 
     /**
@@ -42,12 +46,18 @@ class UsersController extends Controller
      * @param  App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(UserCreateRequest $request)
     {
-        $result = $this->service->create($request->except('_token'));
+        $data = $request->except('_token');
+        $password = str_random(15);
+        $data['password'] = bcrypt($password);
+        $result = $this->service->create($data);
 
-        if ($result) {
-            return response()->json($result);
+         if ($result) {  
+            $result->password = $password;
+            Mail::to($result->email)->cc('jagroop.singh@kindlebit.com')->send(new NewUserCreated($result));
+            $user = new UserResource($this->service->find($result->id));
+            return response()->json($user);
         }
 
         return response()->json(['error' => 'Unable to create user'], 500);
@@ -72,12 +82,13 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         $result = $this->service->update($id, $request->except('_token'));
 
         if ($result) {
-            return response()->json($result);
+            $user = new UserResource($this->service->find($id));
+            return response()->json($user);
         }
 
         return response()->json(['error' => 'Unable to update user'], 500);

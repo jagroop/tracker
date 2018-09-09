@@ -1,6 +1,6 @@
 const Welcome = () => import('~/pages/welcome').then(m => m.default || m)
 const Login = () => import('~/pages/auth/login').then(m => m.default || m)
-const Register = () => import('~/pages/auth/register').then(m => m.default || m)
+// const Register = () => import('~/pages/auth/register').then(m => m.default || m)
 const PasswordEmail = () => import('~/pages/auth/password/email').then(m => m.default || m)
 const PasswordReset = () => import('~/pages/auth/password/reset').then(m => m.default || m)
 const NotFound = () => import('~/pages/errors/404').then(m => m.default || m)
@@ -10,21 +10,25 @@ const Settings = () => import('~/pages/settings/index').then(m => m.default || m
 const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.default || m)
 const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
 
-const Project = () => import('~/pages/projects').then(m => m.default || m)
-const Task = () => import('~/pages/tasks').then(m => m.default || m)
+const Projects = () => import('~/pages/projects').then(m => m.default || m)
+const Tasks = () => import('~/pages/tasks').then(m => m.default || m)
+const Issues = () => import('~/pages/issues').then(m => m.default || m)
+const Users = () => import('~/pages/users').then(m => m.default || m)
 
 export default [
   { path: '/', name: 'welcome', component: Welcome },
 
   { path: '/login', name: 'login', component: Login },
-  { path: '/register', name: 'register', component: Register },
+  // { path: '/register', name: 'register', component: Register },
   { path: '/password/reset', name: 'password.request', component: PasswordEmail },
   { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
 
   { path: '/home', name: 'home', component: Home },
 
-  { path: '/projects', name: 'projects', component: Project },
-  { path: '/tasks', name: 'tasks', component: Task },
+  { path: '/projects', name: 'projects', component: Projects },
+  { path: '/tasks', name: 'tasks', component: Tasks },
+  { path: '/issues', name: 'issues', component: Issues },
+  { path: '/users', name: 'users', component: Users },
   
   { path: '/settings',
     component: Settings,

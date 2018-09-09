@@ -17,7 +17,7 @@
         </el-table-column>
         <el-table-column
           prop="status_formated"
-          label="Status">
+          label="Status" sortable>
           <template slot-scope="scope">
             <el-tag
               :type="statuses[scope.row.status]"
@@ -32,8 +32,8 @@
           v-if="user.role == 'admin'"
           label="Actions">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="editProject(scope.$index, projects)">Edit</el-button>
-            <el-button type="text" size="small" @click="deleteProject(scope.$index, projects)">Delete</el-button>
+            <el-button type="text" size="small" @click="editProject(scope.row.id)">Edit</el-button>
+            <el-button type="text" size="small" @click="deleteProject(scope.row.id)">Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -171,48 +171,47 @@
         self.form.status = 'in_progress';
         self.add_project_dialog_show = false;
       },
-      editProject(index, projects) {
+      editProject(id) {
         var self = this;
-        if(typeof projects[index] != 'undefined') {
-          self.edit_project_dialog_show = true;
-          const project = projects[index];
-          self.current_project.index = index;
-          self.current_project.id = project.id;
-          self.edit_form.name = project.name;
-          self.edit_form.status = project.status;          
-        }
+
+        self.projects.forEach((project) => {
+          if(project.id == id) {
+            self.current_project.id = project.id;
+            self.edit_form.name = project.name;
+            self.edit_form.status = project.status;
+            self.edit_project_dialog_show = true;
+          }
+        });
       },
       async updateProject() {
         var self = this;
-        const { data } = await this.edit_form.patch('/api/v1/projects/'+self.current_project.id);
-        let project = self.projects[self.current_project.index];
-        project.name = data.name;
-        project.status_formated = data.status_formated;
-        self.edit_project_dialog_show = false;
+        const project_id = self.current_project.id;
+        const { data } = await this.edit_form.patch('/api/v1/projects/'+project_id);
+        
+        self.projects.forEach((project) => {
+          if(project.id == project_id) {
+            project.name = data.name;
+            project.status_formated = data.status_formated;
+            project.status = data.status;
+            self.edit_project_dialog_show = false;
+          }
+        });
       },
-      deleteProject(index, projects) {
+      deleteProject(id) {
         var self = this;
-        if(typeof projects[index] != 'undefined') {
-          this.$confirm('This will permanently delete the record. Continue?', 'Warning', {
-            confirmButtonText: 'OK',
-            cancelButtonText: 'Cancel',
-            type: 'warning'
-          }).then(() => {
-            const { data } = this.edit_form.delete('/api/v1/projects/'+projects[index].id);
-            self.total_projects--;
-            self.projects.splice(index, 1);
-          });       
-        }
-      },
-      formatter(row, column) {
-        return row.address;
-      },
-      filterTag(value, row) {
-        return row.tag === value;
-      },
-      filterHandler(value, row, column) {
-        const property = column['property'];
-        return row[property] === value;
+        self.projects.forEach((project, index) => {
+          if(project.id === id) {
+            this.$confirm('This will permanently delete the record. Continue?', 'Warning', {
+              confirmButtonText: 'OK',
+              cancelButtonText: 'Cancel',
+              type: 'warning'
+            }).then(() => {
+              const { data } = this.edit_form.delete('/api/v1/projects/'+id);
+              self.total_projects--;
+              self.projects.splice(index, 1);
+            });  
+          }
+        });
       }
     },
   }

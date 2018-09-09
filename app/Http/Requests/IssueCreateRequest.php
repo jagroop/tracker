@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\User;
+use App\Models\Issue;
 
-class UserUpdateRequest extends FormRequest
+class IssueCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,10 +28,6 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required',
-            'role' => 'required',
-            'email' => 'required|email|unique:users,email,' . $this->segment(4),
-        ];
+        return Issue::$rules;
     }
 }
