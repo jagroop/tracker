@@ -1,16 +1,36 @@
 <template>
-  <card :title="$t('home')">
-      <router-link :to="{ name: 'test' }">Test Page</router-link>
-    {{ $t('you_are_logged_in') }}
-  </card>
+  <el-row :gutter="12">
+    <el-col :span="8">
+      <el-card shadow="hover">
+        Projects
+      </el-card>
+    </el-col>
+    <el-col :span="8">
+      <el-card shadow="hover">
+        Issues
+      </el-card>
+    </el-col>
+    <el-col :span="8">
+      <el-card shadow="hover">
+        Users
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
-export default {
-  middleware: 'auth',
-
-  metaInfo () {
-    return { title: this.$t('home') }
+  export default {
+    layout: 'app',
+    middleware: 'auth',
+    metaInfo () {
+      return { title: this.$t('home') }
+    },
+    data() {
+      return {
+      }
+    },
+    methods: {
+      
+    }
   }
-}
 </script>

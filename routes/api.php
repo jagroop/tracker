@@ -25,6 +25,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
+    Route::get('test', 'Api\TestController@tasks');
+
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
@@ -32,4 +34,34 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Project API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::resource('v1/projects', 'Api\ProjectsController', ['as' => 'api']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Task API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::resource('v1/tasks', 'Api\TasksController', ['as' => 'api']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| User API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::resource('v1/users', 'Api\UsersController', ['as' => 'api']);
 });

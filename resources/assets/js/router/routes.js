@@ -10,7 +10,8 @@ const Settings = () => import('~/pages/settings/index').then(m => m.default || m
 const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.default || m)
 const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
 
-const Test = () => import('~/pages/test').then(m => m.default || m)
+const Project = () => import('~/pages/projects').then(m => m.default || m)
+const Task = () => import('~/pages/tasks').then(m => m.default || m)
 
 export default [
   { path: '/', name: 'welcome', component: Welcome },
@@ -21,7 +22,9 @@ export default [
   { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
 
   { path: '/home', name: 'home', component: Home },
-  { path: '/test', name: 'test', component: Test },
+
+  { path: '/projects', name: 'projects', component: Project },
+  { path: '/tasks', name: 'tasks', component: Task },
   
   { path: '/settings',
     component: Settings,

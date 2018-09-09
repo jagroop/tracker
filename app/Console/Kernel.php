@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\DailyProjectStatus;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,8 +25,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // 7 PM -> 19:00
+        $schedule->command('pms:status_update')
+         ->at('19:00')
+         ->when(function(){
+          return !now()->isWeekend();
+         });
+
+        // 6:30 PM -> 18:30        
+        $schedule->command('pms:status_remind')
+         ->at('18:30')
+         ->when(function(){
+          return !now()->isWeekend();
+         });
     }
 
     /**
