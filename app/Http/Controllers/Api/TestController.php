@@ -16,6 +16,7 @@ class TestController extends Controller
 {
     public function tasks()
     {
-      Mail::to('jagroop.singh@kindlebit.com')->send(new StatusReminderEmail);
+      \Notifications::notify(1, 'success', 'Hi this is a test', 'foo');
+      //Mail::to('jagroop.singh@kindlebit.com')->send(new StatusReminderEmail);
     }
 }
