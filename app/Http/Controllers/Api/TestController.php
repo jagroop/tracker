@@ -9,12 +9,13 @@ use App\Http\Resources\TaskCollection;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Mail\StatusReminderEmail;
+use Illuminate\Support\Facades\Mail;
 
 class TestController extends Controller
 {
     public function tasks()
     {
-        $user = User::find(1);
-        dd($user->todayTasks()->count());
+      Mail::to('jagroop.singh@kindlebit.com')->send(new StatusReminderEmail);
     }
 }
