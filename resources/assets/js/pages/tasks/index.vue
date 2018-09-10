@@ -258,6 +258,7 @@
           getFilters = JSON.parse(getFilters);
           this.filters.user_id = getFilters.user_id;
           this.filters.date = getFilters.date;
+          this.filters.project_id = getFilters.project_id;
          }
         this.loadInitials();
         this.loadTasks(1);
