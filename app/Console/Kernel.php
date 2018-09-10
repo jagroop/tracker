@@ -38,6 +38,13 @@ class Kernel extends ConsoleKernel
          ->when(function(){
           return !now()->isWeekend();
          });
+
+         // 9:00 PM -> 09:30        
+        $schedule->command('pms:update_data')
+         ->at('09:00')
+         ->when(function(){
+          return !now()->isWeekend();
+         });
     }
 
     /**
