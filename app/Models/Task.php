@@ -30,7 +30,7 @@ class Task extends Model
        'project_id' => 'required|exists:projects,id',
        'task_name' => 'required',
        'task_desc' => 'required',
-       'assigned_to' => 'required|exists:users,id',
+       // 'assigned_to' => 'required|exists:users,id',
        'task_status' => 'required',
     ];
 

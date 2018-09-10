@@ -30,7 +30,7 @@ class Issue extends Model
        'project_id' => 'required|exists:projects,id',
        'issue_name' => 'required',
        'issue_desc' => 'required',
-       'assigned_to' => 'required|exists:users,id',
+       // 'assigned_to' => 'required|exists:users,id',
        'issue_status' => 'required',
     ];
 
