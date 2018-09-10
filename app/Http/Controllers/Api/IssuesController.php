@@ -48,7 +48,7 @@ class IssuesController extends Controller
     public function store(IssueCreateRequest $request)
     {
         $data = $request->except('_token');
-        if(!$request->has('assigned_to')) {
+        if(!$request->has('assigned_to') || trim($request->assigned_to) == '') {
           $data['assigned_to'] = auth()->user()->id;
         }
         $result = $this->service->create($data);
