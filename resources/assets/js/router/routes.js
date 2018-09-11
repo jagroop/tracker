@@ -38,5 +38,5 @@ export default [
       { path: 'password', name: 'settings.password', component: SettingsPassword }
     ] },
 
-  { path: '*', component: NotFound }
+  // { path: '*', component: NotFound }
 ]

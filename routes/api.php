@@ -75,3 +75,14 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('v1/issues', 'Api\IssuesController', ['as' => 'api']);
 });
+
+/*
+|--------------------------------------------------------------------------
+| File API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::resource('v1/files', 'Api\FilesController', ['as' => 'api']);
+    Route::post('v1/download', 'Api\MediaController@download', ['as' => 'api']);
+});

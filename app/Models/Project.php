@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Project extends Model
+class Project extends Model implements HasMedia
 {
+    use HasMediaTrait;
+    
     public $table = "projects";
 
     public $primaryKey = "id";
@@ -28,5 +32,18 @@ class Project extends Model
         'status' => 'required',
     ];
 
-    // Project 
+    /**
+     * Get Model uploaded media files
+     * @return Array
+     */
+    public function getUploadedFiles()
+    {
+        return $this->getMedia($this->table)->map(function($media){
+          $data = $media->only(['id', 'model_id', 'file_name', 'collection_name', 'size', 'mime_type', 'created_at']);
+          $data['full_url'] = $media->getFullUrl();
+          $data['file_type'] = trim(str_before($data['mime_type'], '/'));
+          $data['created_at'] = $data['created_at']->diffForhumans();
+          return $data;
+        });
+    }
 }
