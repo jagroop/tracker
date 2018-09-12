@@ -12,21 +12,23 @@
       style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
-            <el-row>
-              <el-col :span="8" style="width:12%; padding:12px; height: 150px;" v-for="(file, index) in props.row.files" :key="index">
-                <el-card :body-style="{ padding: '0px' }">
-                  <img v-if="file.file_type == 'image'" :src="file.full_url" class="image">
-                  <i v-else class="el-icon-document"></i>
-                  <div style="padding: 14px;">
-                    <span>{{ file.file_name }}</span>
-                    <div class="bottom clearfix">
-                      <time class="file_name">{{ file.created_at }}</time>
-                      <el-button @click="downloadFile(file.id)" type="text" class="download_button"><i class="el-icon-download"></i></el-button>
+            <el-card class="box-card">
+              <el-row>
+                <el-col :span="8" style="width:12%; padding:12px; height: 150px;" v-for="(file, index) in props.row.files" :key="index">
+                  <el-card :body-style="{ padding: '0px' }">
+                    <img v-if="file.file_type == 'image'" :src="file.full_url" class="image">
+                    <i v-else class="el-icon-document"></i>
+                    <div style="padding: 14px;">
+                      <span>{{ file.file_name }}</span>
+                      <div class="bottom clearfix">
+                        <time class="file_name">{{ file.created_at }}</time>
+                        <el-button @click="downloadFile(file.id)" type="text" class="download_button"><i class="el-icon-download"></i></el-button>
+                      </div>
                     </div>
-                  </div>
-                </el-card>
-              </el-col>
-            </el-row>
+                  </el-card>
+                </el-col>
+              </el-row>
+            </el-card>            
           </template>
         </el-table-column>
         <el-table-column
