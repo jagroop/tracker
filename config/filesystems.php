@@ -50,8 +50,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/public') . '/tracker_files',
+            'url' => env('APP_URL').'/storage/tracker_files',
             'visibility' => 'public',
         ],
 
