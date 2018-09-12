@@ -49,12 +49,16 @@ class TasksController extends Controller
     public function store(TaskCreateRequest $request)
     {
         $data = $request->except('_token');
-        if(!$request->has('assigned_to') || trim($request->assigned_to) == '') {
+        if(trim($request->input('assigned_to')) == '') {
           $data['assigned_to'] = auth()->user()->id;
         }
         $result = $this->service->create($data);
 
-        if ($result) {  
+        if ($result) {
+            if($data['assigned_to'] != auth()->user()->id) {
+              // Send NOtification
+              Notifications::notify($data['assigned_to'], 'success', auth()->user()->name  . ' have assigned you an task #' . $result->id);
+            }  
             $task = new TaskResource($this->service->find($result->id));
             return response()->json($task);
         }

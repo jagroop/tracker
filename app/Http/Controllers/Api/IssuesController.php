@@ -48,12 +48,16 @@ class IssuesController extends Controller
     public function store(IssueCreateRequest $request)
     {
         $data = $request->except('_token');
-        if(!$request->has('assigned_to') || trim($request->assigned_to) == '') {
+        if(trim($request->input('assigned_to')) == '') {
           $data['assigned_to'] = auth()->user()->id;
         }
         $result = $this->service->create($data);
 
         if ($result) {  
+            if($data['assigned_to'] != auth()->user()->id) {
+              // Send NOtification
+              Notifications::notify($data['assigned_to'], 'success', auth()->user()->name  . ' have assigned you an issue #' . $result->id);
+            }
             $issue = new IssueResource($this->service->find($result->id));
             return response()->json($issue);
         }
@@ -82,9 +86,15 @@ class IssuesController extends Controller
      */
     public function update(IssueUpdateRequest $request, $id)
     {
+        $getIssue = $this->service->find($id);
         $result = $this->service->update($id, $request->except(['index']));
 
         if ($result) {
+            if($getIssue->issue_status != $request->issue_status) {
+              Notifications::notify($data['assigned_to'], 'success', auth()->user()->name  . ' have changed issue status from *** '.$getIssue->issue_status.'*** to ***'.$request->issue_status.'*** you an issue #' . $id);
+              Notifications::notify($data['assigned_by'], 'success', auth()->user()->name  . ' have changed issue status from *** '.$getIssue->issue_status.' *** to ***'.$request->issue_status.'*** you an issue #' . $id);
+              // Send NOtification
+            }
             $task = new IssueResource($this->service->find($id));
             return response()->json($task);
         }
