@@ -57,7 +57,7 @@ class TasksController extends Controller
         if ($result) {
             if($data['assigned_to'] != auth()->user()->id) {
               // Send NOtification
-              Notifications::notify($data['assigned_to'], 'success', auth()->user()->name  . ' have assigned you an task #' . $result->id);
+              \Notifications::notify($data['assigned_to'], 'success', auth()->user()->name  . ' have assigned you a task #' . $result->id);
             }  
             $task = new TaskResource($this->service->find($result->id));
             return response()->json($task);
