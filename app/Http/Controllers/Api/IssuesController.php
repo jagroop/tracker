@@ -91,8 +91,8 @@ class IssuesController extends Controller
 
         if ($result) {
             if($getIssue->issue_status != $request->issue_status) {
-              \Notifications::notify($data['assigned_to'], 'success', auth()->user()->name  . ' have changed issue status from *** '.$getIssue->issue_status.'*** to ***'.$request->issue_status.'*** you an issue #' . $id, '');
-              \Notifications::notify($data['assigned_by'], 'success', auth()->user()->name  . ' have changed issue status from *** '.$getIssue->issue_status.' *** to ***'.$request->issue_status.'*** you an issue #' . $id, '');
+              \Notifications::notify($request->assigned_to, 'success', auth()->user()->name  . ' have changed issue status from *** '.$getIssue->issue_status.'*** to ***'.$request->issue_status.'*** you an issue #' . $id, '');
+              \Notifications::notify($request->assigned_by, 'success', auth()->user()->name  . ' have changed issue status from *** '.$getIssue->issue_status.' *** to ***'.$request->issue_status.'*** you an issue #' . $id, '');
               // Send NOtification
             }
             $task = new IssueResource($this->service->find($id));
