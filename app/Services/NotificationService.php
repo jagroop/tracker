@@ -135,10 +135,10 @@ class NotificationService
             $input['uuid'] = Crypto::uuid();
 
             $user = $this->userService->find($input['user_id']);
-            // $user->notify(new GeneralNotification([
-            //     'title' => $input['title'],
-            //     'details' => $input['details'],
-            // ]));
+            $user->notify(new GeneralNotification([
+                'title' => $input['title'],
+                'details' => $input['details'],
+            ]));
 
             return $this->model->create($input);
         } catch (Exception $e) {
