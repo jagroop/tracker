@@ -18,13 +18,6 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->runningUnitTests()) {
             Schema::defaultStringLength(191);
         }
-        \DB::listen(function ($query) {
-            info([
-                $query->sql,
-                $query->bindings,
-                $query->time
-            ]);
-        });
     }
 
     /**
@@ -37,5 +30,15 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }
+        
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+
+         $loader->alias('Notifications', \App\Facades\Notifications::class);
+
+         $this->app->singleton('NotificationService', function ($app) {
+
+           return app(\App\Services\NotificationService::class);
+
+         });
     }
 }
