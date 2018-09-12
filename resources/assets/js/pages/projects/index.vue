@@ -12,23 +12,9 @@
       style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
-            <el-card class="box-card">
-              <el-row>
-                <el-col :span="8" style="width:12%; padding:12px; height: 150px;" v-for="(file, index) in props.row.files" :key="index">
-                  <el-card :body-style="{ padding: '0px' }">
-                    <img v-if="file.file_type == 'image'" :src="file.full_url" class="image">
-                    <i v-else class="el-icon-document"></i>
-                    <div style="padding: 14px;">
-                      <span>{{ file.file_name }}</span>
-                      <div class="bottom clearfix">
-                        <time class="file_name">{{ file.created_at }}</time>
-                        <el-button @click="downloadFile(file.id)" type="text" class="download_button"><i class="el-icon-download"></i></el-button>
-                      </div>
-                    </div>
-                  </el-card>
-                </el-col>
-              </el-row>
-            </el-card>            
+            <ul v-for="(file, index) in props.row.files" :key="index">
+                <li><a :href="file.full_url" target="_blank">{{ file.file_name }}</a> | {{ file.created_at }}</li>
+            </ul>          
           </template>
         </el-table-column>
         <el-table-column
@@ -125,7 +111,7 @@
     <!-- Upload Files Dialog Starts -->
     <el-dialog
       title="Upload Files"
-      :visible.sync="add_project_files_dialog_show" width="30%" center>
+      :visible.sync="add_files_dialog_show" width="30%" center>
       <el-upload
         drag
         action="api/v1/files"
@@ -175,7 +161,7 @@
         per_page: 0,
         table_loading: true,
         add_project_dialog_show: false,
-        add_project_files_dialog_show: false,
+        add_files_dialog_show: false,
         edit_project_dialog_show: false,
         form: new Form({
           name: '',
@@ -196,10 +182,10 @@
     methods: {
       openFilesDialog(id) {
         this.filesData.model_id = id;
-        this.add_project_files_dialog_show = true;
+        this.add_files_dialog_show = true;
       },
       filesUploaded() {
-        this.add_project_files_dialog_show = false;
+        this.add_files_dialog_show = false;
         this.fileList = [];
       },
       loadProjects(page) {
@@ -266,51 +252,7 @@
             });  
           }
         });
-      },
-      downloadFile(file_id){
-        const data = {
-          media_id: file_id
-        }
-        axios.post('/api/v1/download', data)
-          .then(function (response) {
-              //done
-          })
-          .catch(function (error) {
-              console.log(error);
-          });
       }
     },
   }
 </script>
-
-<style>
-  .file_name {
-    font-size: 13px;
-    color: #999;
-  }
-  
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .download_button {
-    padding: 0;
-    float: right;
-  }
-
-  .image {
-    width: 100%;
-    display: block;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-      display: table;
-      content: "";
-  }
-  
-  .clearfix:after {
-      clear: both
-  }
-</style>

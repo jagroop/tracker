@@ -46,6 +46,9 @@
           <template slot-scope="props">
             <p>Description: {{ props.row.task_desc }}</p>
             <p>Assigned By: {{ props.row.assigned_by }}</p>
+            <ul v-for="(file, index) in props.row.files" :key="index">
+                <li><a :href="file.full_url" target="_blank">{{ file.file_name }}</a> | {{ file.created_at }}</li>
+            </ul>
           </template>
         </el-table-column>
         <el-table-column
@@ -85,6 +88,7 @@
           <template slot-scope="scope">
             <el-button :disabled="user.role != 'admin' && (scope.row.assigned_by_id != user.id && scope.row.assigned_to_id != user.id)" type="text" size="small" @click="editTask(scope.row.id)">Edit</el-button>
             <el-button :disabled="user.role != 'admin' && (scope.row.assigned_by_id != user.id && scope.row.assigned_to_id != user.id)" type="text" size="small" @click="deleteTask(scope.row.id)">Delete</el-button>
+            <el-button type="text" size="small" @click="openFilesDialog(scope.row.id)"><i class="el-icon-upload"></i></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -194,6 +198,25 @@
       </el-form>
     </el-dialog>
     <!-- Edit Task Dialog ends -->
+    
+    <!-- Upload Files Dialog Starts -->
+    <el-dialog
+      title="Upload Files"
+      :visible.sync="add_files_dialog_show" width="30%" center>
+      <el-upload
+        drag
+        action="api/v1/files"
+        :file-list="fileList"
+        list-type="text"
+        :auto-upload="true"
+        :on-success="filesUploaded"
+        :data="filesData"
+        multiple>
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+      </el-upload>
+    </el-dialog>
+    <!-- Upload Files Dialog ends -->
 
   </div>
 </template>
@@ -211,6 +234,11 @@
     },
     data() {
       return {
+        fileList: [],
+        filesData: {
+          model_id: '',
+          model_name: 'tasks'
+        },
         tasks: [],
         projects: [],
         users: [],
@@ -228,6 +256,7 @@
         per_page: 0,
         table_loading: true,
         add_task_dialog_show: false,
+        add_files_dialog_show: false,
         edit_task_dialog_show: false,
         form: new Form({
           project_id: '',
@@ -267,6 +296,14 @@
       user: 'auth/user'
     }),
     methods: {
+      openFilesDialog(id) {
+        this.filesData.model_id = id;
+        this.add_files_dialog_show = true;
+      },
+      filesUploaded() {
+        this.add_files_dialog_show = false;
+        this.fileList = [];
+      },
       loadInitials(){
         var self = this;
         var requestData = [{

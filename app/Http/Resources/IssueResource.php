@@ -29,6 +29,7 @@ class IssueResource extends JsonResource
           'created_at'            => $this->created_at->toDateTimeString(),
           'started_date'          => $this->started_date,
           'closed_date'           => $this->closed_date,
+          'files' => $this->getUploadedFiles()
         ];
     }
 }
