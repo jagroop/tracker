@@ -49,9 +49,7 @@ class GeneralNotification extends Notification
         return (new MailMessage)
             ->subject('Tracker notification')
             ->line('Hey '.$notifiable->name)
-            // ->line('We have a notfiication for you.')
             ->line($this->info['title'])
-            ->line($this->info['details'])
-            ->action('Visit here for more info', url('/user/notifications'));
+            ->action('Visit here for more info', url($this->info['details']));
     }
 }

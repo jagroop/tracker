@@ -56,7 +56,7 @@ class IssuesController extends Controller
         if ($result) {  
             if($data['assigned_to'] != auth()->user()->id) {
               // Send NOtification
-              \Notifications::notify($data['assigned_to'], 'success', auth()->user()->name  . ' have assigned you an issue #' . $result->id, '');
+              \Notifications::notify($data['assigned_to'], 'success', auth()->user()->name  . ' have assigned you an issue #' . $result->id, 'issues');
             }
             $issue = new IssueResource($this->service->find($result->id));
             return response()->json($issue);
@@ -100,7 +100,7 @@ class IssuesController extends Controller
               if($sendNOtifTo) {
                 $statusFrom = ucwords(str_replace('_', ' ', $getIssue->issue_status));
                 $statusTo = ucwords(str_replace('_', ' ', $request->issue_status));
-                \Notifications::notify($sendNOtifTo, 'success', auth()->user()->name  . ' have changed issue ( #'.$id.' ) status from *** '.$statusFrom.'*** to ***'.$statusTo.'*** .', '');
+                \Notifications::notify($sendNOtifTo, 'success', auth()->user()->name  . ' have changed issue ( #'.$id.' ) status from *** '.$statusFrom.'*** to ***'.$statusTo.'*** .', 'issues');
               }
               // Send NOtification
             }
