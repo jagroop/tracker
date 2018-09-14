@@ -42,15 +42,15 @@ class FilesController extends Controller
         if($request->model_name == 'projects') {
           $project = Project::find($request->model_id);
           $project->addMediaFromRequest('file')->toMediaCollection('projects');
-          return response()->json(['success' => 1, 'message' => 'Done']);
+          return response()->json(['success' => 1, 'data' => $project->getUploadedFiles(), 'message' => 'Done']);
         } elseif($request->model_name == 'issues') {
           $issue = Issue::find($request->model_id);
           $issue->addMediaFromRequest('file')->toMediaCollection('issues');
-          return response()->json(['success' => 1, 'message' => 'Done']);
+          return response()->json(['success' => 1, 'data' => $issue->getUploadedFiles(), 'message' => 'Done']);
         } elseif($request->model_name == 'tasks') {
           $task = Task::find($request->model_id);
           $task->addMediaFromRequest('file')->toMediaCollection('tasks');
-          return response()->json(['success' => 1, 'message' => 'Done']);
+          return response()->json(['success' => 1, 'data' => $task->getUploadedFiles(), 'message' => 'Done']);
         } elseif($request->model_name == 'users') {
           // not in scope yet
         } else {

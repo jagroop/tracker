@@ -302,9 +302,15 @@
         this.filesData.model_id = id;
         this.add_files_dialog_show = true;
       },
-      filesUploaded() {
-        this.add_files_dialog_show = false;
-        this.fileList = [];
+      filesUploaded(response) {
+        var self = this;
+        self.add_files_dialog_show = false;
+        self.fileList = [];
+        self.issues.forEach((issue) => {
+          if(issue.id == this.filesData.model_id) {
+            issue.files = response.data;
+          }
+        });
       },
       loadInitials(){
         var self = this;
