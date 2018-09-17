@@ -13,11 +13,12 @@ class WebSocketController extends Controller implements MessageComponentInterfac
     }
 
     public function onOpen(ConnectionInterface $conn) {
+        echo "new connection \n";
         $this->clients->attach($conn);
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
-        echo $msg;
+        echo $msg . "\n";
         foreach ($this->clients as $client) {
             if ($from != $client) {
                 $client->send($msg);
