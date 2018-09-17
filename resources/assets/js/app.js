@@ -15,6 +15,9 @@ Vue.config.productionTip = false
 Vue.use(ElementUI, { locale })
 Vue.use(VueCookie)
 
+
+window.WS = new WebSocket('ws://localhost:8090');
+
 /* eslint-disable no-new */
 new Vue({
   i18n,

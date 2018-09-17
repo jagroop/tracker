@@ -357,6 +357,13 @@
       async saveTask() {
         var self = this;
         const { data } = await this.form.post('/api/v1/tasks');
+        if(self.form.assigned_by != self.form.assigned_to) {
+          WS.send(JSON.stringify({
+            receiver: self.form.assigned_to,
+            title: self.user.name + ' assigned a new task',
+            content: self.form.task_name
+          }));
+        }
         self.tasks.unshift(data);
         self.total_tasks++;
         self.form.assigned_by = '';

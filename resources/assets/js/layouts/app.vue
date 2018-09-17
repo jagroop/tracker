@@ -36,6 +36,8 @@
 </template>
 <script>
 import Navbar from '~/components/Navbar'
+import { mapGetters } from 'vuex'
+import Push from 'push.js'
 
 export default {
   name: 'AppLayout',
@@ -47,6 +49,26 @@ export default {
     return {
       current_active_tab: 'home'
     }
+  },
+  computed: mapGetters({
+    user: 'auth/user'
+  }),
+  mounted() {
+    var self = this;
+    Push.Permission.request();
+    WS.onmessage = function(e) { 
+      console.log('here');
+      const msg = JSON.parse(e.data);
+      const user = self.user;
+      console.log(user.id, user.name);
+      if(user.id === msg.receiver) {
+        Push.create(msg.title, {
+            body: msg.content,
+            timeout: 8000
+        });
+      }
+    };
+    console.log(this.user);
   },
   methods: {
     switchTab(index) {

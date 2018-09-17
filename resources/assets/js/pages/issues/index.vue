@@ -361,6 +361,15 @@
         var self = this;
         const { data } = await this.form.post('/api/v1/issues');
         self.issues.unshift(data);
+        
+        if(self.form.assigned_by != self.form.assigned_to) {
+          WS.send(JSON.stringify({
+            receiver: self.form.assigned_to,
+            title: self.user.name + ' assigned you issue',
+            content: self.form.issue_name
+          }));
+        }
+
         self.total_issues++;
         self.form.assigned_by = '';
         self.form.assigned_to = '';
@@ -392,6 +401,13 @@
         const { data } = await this.edit_form.patch('/api/v1/issues/'+self.current_issue.id);
         self.issues.forEach((issue) => {
           if(issue.id === issue_id) {
+            if(issue.issue_status != data.issue_status) {
+              WS.send(JSON.stringify({
+                receiver: data.assigned_to,
+                title: self.user.name + ' updated issue #' + data.id,
+                content: issue.issue_status_formated + ' -> ' + data.issue_status_formated
+              }));
+            }
             issue.status_formated = data.status_formated;
             issue.project_id = data.project_id;
             issue.project_name = data.project_name;
