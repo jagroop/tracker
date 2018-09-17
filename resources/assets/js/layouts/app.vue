@@ -55,12 +55,12 @@ export default {
   }),
   mounted() {
     var self = this;
+    
     Push.Permission.request();
+
     WS.onmessage = function(e) { 
-      console.log('here');
       const msg = JSON.parse(e.data);
       const user = self.user;
-      console.log(user.id, user.name);
       if(user.id === msg.receiver) {
         Push.create(msg.title, {
             body: msg.content,
@@ -68,7 +68,6 @@ export default {
         });
       }
     };
-    console.log(this.user);
   },
   methods: {
     switchTab(index) {
