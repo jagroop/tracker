@@ -20,12 +20,12 @@ class TestController extends Controller
     {
       // \Notifications::notify(1, 'success', 'Hi this is a test', 'foo');
       //Mail::to('jagroop.singh@kindlebit.com')->send(new StatusReminderEmail);
-      $now = now()->toDateTimeString();
-      $past10Hours = now()->subHours(10)->toDateTimeString();  
-      // $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->get()->toArray();
-      $todayTasks = Task::all();
-      TaskResource::withoutWrapping();      
-      $tasks = TaskResource::collection($todayTasks)->all();
-      dd($tasks);
+      // $now = now()->toDateTimeString();
+      // $past10Hours = now()->subHours(10)->toDateTimeString();  
+      // // $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->get()->toArray();
+      // $todayTasks = Task::all();
+      // TaskResource::withoutWrapping();      
+      // $tasks = TaskResource::collection($todayTasks)->all();
+      // dd($tasks);
     }
 }
