@@ -17,6 +17,7 @@ class WebSocketController extends Controller implements MessageComponentInterfac
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
+        echo $msg;
         foreach ($this->clients as $client) {
             if ($from != $client) {
                 $client->send($msg);
