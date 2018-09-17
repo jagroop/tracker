@@ -16,7 +16,7 @@ Vue.use(ElementUI, { locale })
 Vue.use(VueCookie)
 
 
-window.WS = new WebSocket('ws://localhost:8090');
+window.WS = new WebSocket('ws://192.168.5.254:8090');
 
 /* eslint-disable no-new */
 new Vue({
