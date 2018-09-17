@@ -19,6 +19,7 @@ Vue.use(VueCookie)
 window.WS = new WebSocket('ws://192.168.5.254:8090');
 
 /* eslint-disable no-new */
+
 new Vue({
   i18n,
   store,
