@@ -47,16 +47,9 @@ class DailyProjectStatus extends Command
         TaskResource::withoutWrapping();      
         $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->get();
         $tasks  = collect(TaskResource::collection($todayTasks))->sortBy('project_name');
-        // dd($collection);
         if(count($todayTasks) > 0) {
-          // $data = [];
-          // foreach ($collection as $projectName => $tasks) {
-          //   $groupedTasks = collect($tasks)->groupBy('assigned_to')->toArray();
-          //   foreach ($groupedTasks as $assignedTo => $groupedTask) {
-          //     $data[$projectName][$assignedTo] = $groupedTask;
-          //   }
-          // }
-          Mail::to('ram.sharma@kindlebit.com')->cc('jagroop.singh@kindlebit.com')->send(new DailyStatus($tasks));
+          // Mail::to('ram.sharma@kindlebit.com')->cc('jagroop.singh@kindlebit.com')->send(new DailyStatus($tasks));
+          Mail::to('jagroop.singh@kindlebit.com')->send(new DailyStatus($tasks));
         }
     }
 }
