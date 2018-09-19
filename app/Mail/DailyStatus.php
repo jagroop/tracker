@@ -30,35 +30,25 @@ class DailyStatus extends Mailable
      */
     public function build()
     {
-        $content = [];
-        $i = 0;
-        foreach ($this->tasks as $projectName => $items) {
-          $content[$i]['project_name'] = $projectName;
-          $j = 0;
-          foreach ($items as $devName => $tasks) {
-            $content[$i]['users'][$j]['user_name'] = $devName;            
-            
-            $tasksCollection = collect($tasks)->map(function($item){
-              $value = [];
-              $value['id']                   = $item['id'];
-              $value['task_name']            = $item['task_name'];
-              $value['task_desc']            = $item['task_desc'];
-              $value['task_status_formated'] = $item['task_status_formated'];
-              return array_values($value);
-            })->toArray();
+        $tasksCollection = $this->tasks->map(function($item){          
+          $value = [];
+          $value['project_name']         = $item['project_name'];
+          $value['assigned_to']          = $item['assigned_to'];
+          $value['task_name']            = str_limit($item['task_name'], 50, '...');
+          $value['task_desc']            = str_limit($item['task_desc'], 100, '...');
+          $value['task_status_formated'] = $item['task_status_formated'];
+          return array_values($value);
+        })->toArray();
 
-            $tableBuilder = new \MaddHatter\MarkdownTable\Builder();
-            $tableBuilder->headers(['Task ID','Task', 'Description', 'Status'])
-            ->align(['L','L', 'L','C'])
+        $tableBuilder = new \MaddHatter\MarkdownTable\Builder();
+            $tableBuilder->headers(['Project Name', 'Developer', 'Task', 'Description', 'Status'])
+            ->align(['L', 'L', 'L', 'L','C'])
             ->rows($tasksCollection);
-            
-            $content[$i]['users'][$j]['tasks'] = $tableBuilder->render();   
-            $j++;
-          }
-          $i++;          
-        }
+
+        $table = $tableBuilder->render();
+
         return $this->subject('Daily Projects status.')
-                    ->markdown('email.daily_status')
-                    ->with('content',  $content);
+            ->markdown('email.daily_status')
+            ->with('table',  $table);
     }
 }

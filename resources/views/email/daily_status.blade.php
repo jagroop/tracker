@@ -1,16 +1,12 @@
 @component('mail::message')
-@foreach($content as $project)
-# Project Name : {{ $project['project_name'] }}
-
-@foreach($project['users'] as $user)
-Developer : {{ $user['user_name'] }}
+## Hello Sir Good Evening here is the list of tasks team members worked on today
+<br>
+<br>
 @component('mail::table')
-{{ $user['tasks'] }}
+{{ $table }}
 @endcomponent
-@endforeach
 <br>
 <br>
-@endforeach
 Thanks,<br>
 Jagroop Singh
 @endcomponent
