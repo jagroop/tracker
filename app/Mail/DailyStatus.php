@@ -42,7 +42,7 @@ class DailyStatus extends Mailable
 
         $tableBuilder = new \MaddHatter\MarkdownTable\Builder();
             $tableBuilder->headers(['Project Name', 'Developer', 'Task', 'Description', 'Status'])
-            ->align(['L', 'L', 'L', 'L','C'])
+            ->align(['C', 'L', 'L', 'L','C'])
             ->rows($tasksCollection);
 
         $table = $tableBuilder->render();
