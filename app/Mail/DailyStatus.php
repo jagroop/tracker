@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Helpers\Tracker;
 
 class DailyStatus extends Mailable
 {
@@ -34,8 +35,8 @@ class DailyStatus extends Mailable
           $value = [];
           $value['project_name']         = $item['project_name'];
           $value['assigned_to']          = $item['assigned_to'];
-          $value['task_name']            = str_limit($item['task_name'], 50, '...');
-          $value['task_desc']            = str_limit($item['task_desc'], 100, '...');
+          $value['task_name']            = Tracker::sanitizeKeyword($item['task_name'], $wordsLimit = 50);
+          $value['task_desc']            = Tracker::sanitizeKeyword($item['task_desc'], $wordsLimit = 120);
           $value['task_status_formated'] = $item['task_status_formated'];
           return array_values($value);
         })->toArray();
