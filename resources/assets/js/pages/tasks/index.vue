@@ -44,11 +44,14 @@
       style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
-            <p>Description: {{ props.row.task_desc }}</p>
-            <p>Assigned By: {{ props.row.assigned_by }}</p>
+            <p><strong>Description:</strong> {{ props.row.task_desc }}</p>
+            <p><strong>Assigned By:</strong> {{ props.row.assigned_by }}</p>
+            <p><strong>Activity Logs:</strong> </p>
             <el-breadcrumb separator-class="el-icon-arrow-right">
-              <el-breadcrumb-item v-for="(activity, ind) in props.row.activity" :key="ind" :title="activity.created_at_human">{{ activity.label }}</el-breadcrumb-item>
+              <el-breadcrumb-item v-for="(activity, ind) in props.row.activity" :key="ind" :title="activity.title +' | '+activity.created_at_human">{{ activity.label }}</el-breadcrumb-item>
             </el-breadcrumb>
+            <br>
+            <p><strong>Attachments:</strong> </p>
             <ul>
                 <li v-for="(file, index) in props.row.files" :key="index"><a :href="file.full_url" target="_blank">{{ file.file_name }}</a> | {{ file.created_at }}</li>
             </ul>
