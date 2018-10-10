@@ -37,13 +37,14 @@ class DailyStatus extends Mailable
           $value['assigned_to']          = $item['assigned_to'];
           $value['task_name']            = Tracker::sanitizeKeyword($item['task_name'], $wordsLimit = 50);
           $value['task_desc']            = Tracker::sanitizeKeyword($item['task_desc'], $wordsLimit = 120);
+          $value['completion_precentage'] = $item['completion_precentage'] . ' %';
           $value['task_status_formated'] = $item['task_status_formated'];
           return array_values($value);
         })->toArray();
 
         $tableBuilder = new \MaddHatter\MarkdownTable\Builder();
-            $tableBuilder->headers(['Project Name', 'Developer', 'Task', 'Description', 'Status'])
-            ->align(['C', 'L', 'L', 'L','C'])
+            $tableBuilder->headers(['Project Name', 'Developer', 'Task', 'Description', 'Progress', 'Status'])
+            ->align(['C', 'L', 'L', 'L','C', 'C'])
             ->rows($tasksCollection);
 
         $table = $tableBuilder->render();

@@ -48,7 +48,7 @@ class DailyProjectStatus extends Command
         $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->get();
         $tasks  = collect(TaskResource::collection($todayTasks))->sortBy('project_name');
         if(count($todayTasks) > 0) {
-          Mail::to('ram.sharma@kindlebit.com')->cc('jagroop.singh@kindlebit.com')->send(new DailyStatus($tasks));
+          Mail::to('pooja.chawla@kindlebit.com')->cc('jagroop.singh@kindlebit.com')->send(new DailyStatus($tasks));
         }
     }
 }
