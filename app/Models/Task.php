@@ -74,7 +74,7 @@ class Task extends Model implements HasMedia
         return [
           'title'            => $activity->description, 
           'label'            => $activity->getExtraProperty('current_status'),
-          'created_at'       => $activity->created_at->toDateTimeString(),
+          'created_at'       => $activity->created_at->format('d-M-Y h:m:i A'),
           'created_at_human' => $activity->created_at->diffForhumans(),
         ];
       })->all(); 
