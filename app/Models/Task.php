@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\Activitylog\Models\Activity;
 
 class Task extends Model implements HasMedia
 {
@@ -21,7 +22,8 @@ class Task extends Model implements HasMedia
   		'project_id',
   		'assigned_by',
   		'assigned_to',
-  		'task_name',
+      'task_name',
+  		'completion_precentage',
   		'task_desc',
   		'task_status',
   		'started_date',
@@ -64,5 +66,17 @@ class Task extends Model implements HasMedia
         $data['created_at'] = $data['created_at']->diffForhumans();
         return $data;
       });
+  }
+
+  public function activity()
+  {
+      return Activity::where(['log_name' => 'tasks', 'subject_id' => $this->id])->get()->map(function($activity){
+        return [
+          'title'            => $activity->description, 
+          'label'            => $activity->getExtraProperty('current_status'),
+          'created_at'       => $activity->created_at->toDateTimeString(),
+          'created_at_human' => $activity->created_at->diffForhumans(),
+        ];
+      })->all(); 
   }
 }

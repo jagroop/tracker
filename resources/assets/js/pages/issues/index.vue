@@ -45,8 +45,8 @@
           <template slot-scope="props">
             <p>Description: {{ props.row.issue_desc }}</p>
             <p>Assigned By: {{ props.row.assigned_by }}</p>
-            <ul v-for="(file, index) in props.row.files" :key="index">
-                <li><a :href="file.full_url" target="_blank">{{ file.file_name }}</a> | {{ file.created_at }}</li>
+            <ul>
+                <li v-for="(file, index) in props.row.files" :key="index"><a :href="file.full_url" target="_blank">{{ file.file_name }}</a> | {{ file.created_at }}</li>
             </ul>
           </template>
         </el-table-column>

@@ -46,8 +46,11 @@
           <template slot-scope="props">
             <p>Description: {{ props.row.task_desc }}</p>
             <p>Assigned By: {{ props.row.assigned_by }}</p>
-            <ul v-for="(file, index) in props.row.files" :key="index">
-                <li><a :href="file.full_url" target="_blank">{{ file.file_name }}</a> | {{ file.created_at }}</li>
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+              <el-breadcrumb-item v-for="(activity, ind) in props.row.activity" :key="ind" :title="activity.created_at_human">{{ activity.label }}</el-breadcrumb-item>
+            </el-breadcrumb>
+            <ul>
+                <li v-for="(file, index) in props.row.files" :key="index"><a :href="file.full_url" target="_blank">{{ file.file_name }}</a> | {{ file.created_at }}</li>
             </ul>
           </template>
         </el-table-column>
@@ -73,6 +76,14 @@
             <el-tag
               :type="statuses[scope.row.task_status]"
               disable-transitions>{{scope.row.task_status_formated}}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="completion_precentage"
+          label="Progress"
+          sortable>
+          <template slot-scope="scope">
+            <span>{{scope.row.completion_precentage}} %</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -143,7 +154,17 @@
             <el-option label="Done" value="done"></el-option>
             <el-option label="On hold" value="on_hold"></el-option>
             <el-option label="Closed" value="closed"></el-option>
+            <el-option label="Deployed" value="deployed"></el-option>
+            <el-option label="Feedback" value="feedback"></el-option>
+            <el-option label="Bug" value="bug"></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="Progress">
+           <el-slider
+            v-model="form.completion_precentage"
+            :step="10"
+            show-stops>
+          </el-slider>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="form.busy" @click="saveTask">Create</el-button>
@@ -190,7 +211,17 @@
             <el-option label="Done" value="done"></el-option>
             <el-option label="On hold" value="on_hold"></el-option>
             <el-option label="Closed" value="closed"></el-option>
+            <el-option label="Deployed" value="deployed"></el-option>
+            <el-option label="Feedback" value="feedback"></el-option>
+            <el-option label="Bug" value="bug"></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="Progress">
+           <el-slider
+            v-model="edit_form.completion_precentage"
+            :step="10"
+            show-stops>
+          </el-slider>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="edit_form.busy" @click="updateTask">Update</el-button>
@@ -243,9 +274,13 @@
         projects: [],
         users: [],
         statuses: {
-          in_progress: 'success',
-          done: 'primary',
+          in_progress: 'primary',
+          done: 'success',
           on_hold: 'danger',
+          closed: 'danger',
+          deployed: 'warning',
+          feedback: 'info',
+          bug: 'danger',
         },
         current_task: {
           id: null,
@@ -263,6 +298,7 @@
           assigned_by: '',
           assigned_to: '',
           task_name: '',
+          completion_precentage: '',
           task_status: 'in_progress',
           task_desc: ''
         }),
@@ -271,6 +307,7 @@
           assigned_by: '',
           assigned_to: '',
           task_name: '',
+          completion_precentage: '',
           task_status: 'in_progress',
           task_desc: ''
         }),
@@ -370,6 +407,7 @@
         self.form.assigned_to = '';
         self.form.task_desc = '';
         self.form.task_name = '';
+        self.form.completion_precentage = 0;
         self.form.task_status = 'in_progress';
         self.add_task_dialog_show = false;
       },
@@ -385,6 +423,7 @@
             self.edit_form.assigned_to_id = task.assigned_to;
             self.edit_form.task_desc = task.task_desc;
             self.edit_form.task_name = task.task_name;
+            self.edit_form.completion_precentage = task.completion_precentage;
             self.edit_form.task_status = task.task_status; 
             self.edit_task_dialog_show = true;
           }
@@ -396,6 +435,7 @@
         const { data } = await this.edit_form.patch('/api/v1/tasks/'+self.current_task.id);
         self.tasks.forEach((task) => {
           if(task.id === task_id) {
+            console.log(data.task_status, 'status ..');
             task.status_formated = data.status_formated;
             task.project_id = data.project_id;
             task.project_name = data.project_name;
@@ -405,6 +445,8 @@
             task.assigned_to_id = data.assigned_to_id;
             task.task_desc = data.task_desc;
             task.task_name = data.task_name;
+            task.activity = data.activity;
+            task.completion_precentage = data.completion_precentage;
             task.task_status = data.task_status; 
             task.task_status_formated = data.task_status_formated; 
             self.edit_task_dialog_show = false;

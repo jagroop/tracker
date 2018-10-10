@@ -55,6 +55,12 @@ class TasksController extends Controller
         $result = $this->service->create($data);
 
         if ($result) {
+           //log activity
+           activity('tasks')
+               ->performedOn($result)
+               ->causedBy(auth()->user())
+               ->withProperties(['current_status' => ucwords(str_replace('_', ' ', $request->task_status))])
+               ->log(auth()->user()->name . ' updated task status to ' . $request->task_status);
             if($data['assigned_to'] != auth()->user()->id) {
               // Send NOtification
               \Notifications::notify($data['assigned_to'], 'success', auth()->user()->name  . ' have assigned you a task #' . $result->id, 'tasks');
@@ -87,11 +93,22 @@ class TasksController extends Controller
      */
     public function update(TaskUpdateRequest $request, $id)
     {        
+        $task = $this->service->find($id);
         $result = $this->service->update($id, $request->except(['index']));
 
         if ($result) {
-            $task = new TaskResource($this->service->find($id));
-            return response()->json($task);
+            
+            if($task->task_status != $request->task_status) {
+              // log activity
+              activity('tasks')
+               ->performedOn($task)
+               ->causedBy(auth()->user())
+               ->withProperties(['current_status' => ucwords(str_replace('_', ' ', $request->task_status))])
+               ->log(auth()->user()->name . ' updated task status from ' . $task->task_status . ' to ' . $request->task_status);
+            }
+            $task = $this->service->find($id);
+            $collection = new TaskResource($task);
+            return response()->json($collection);
         }
 
         return response()->json(['error' => 'Unable to update task'], 500);
