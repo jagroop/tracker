@@ -48,7 +48,7 @@
             <p><strong>Assigned By:</strong> {{ props.row.assigned_by }}</p>
             <p><strong>Activity Logs:</strong> </p>
             <el-breadcrumb separator-class="el-icon-arrow-right">
-              <el-breadcrumb-item v-for="(activity, ind) in props.row.activity" :key="ind" :title="activity.title +' | '+activity.created_at_human">{{ activity.label }}</el-breadcrumb-item>
+              <el-breadcrumb-item v-for="(activity, ind) in props.row.activity" :key="ind" :title="activity.created_at +' | '+activity.created_at_human">{{ activity.label }}</el-breadcrumb-item>
             </el-breadcrumb>
             <br>
             <p><strong>Attachments:</strong> </p>
