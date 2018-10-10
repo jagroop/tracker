@@ -18,8 +18,9 @@ class TestController extends Controller
 {
     public function tasks()
     {
-      $task = Task::find(55);
-      $acitvities = $task->activity();
-      dd($acitvities);
+      $task = User::find(1);
+      $tasks = $task->usersTasks();
+      return $tasks;
+      dd($tasks);
     }
 }

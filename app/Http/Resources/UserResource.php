@@ -21,6 +21,8 @@ class UserResource extends JsonResource
           'role'          => $this->role,
           'total_tasks'   => $this->todayTasks->count(),
           'total_issues'  => $this->todayIssues->count(),
+          'tasks'         => $this->usersTasks(),
+          'issues'         => $this->usersIssues(),
           'role_formated' => ucwords(str_replace('_', ' ', $this->role)),
           'created_at'    => $this->created_at->toDateTimeString()
         ];

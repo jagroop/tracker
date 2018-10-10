@@ -10,6 +10,18 @@
       :default-sort = "{prop: 'created_at', order: 'descending'}"
       v-loading="table_loading"
       style="width: 100%">
+       <el-table-column type="expand">
+         <template slot-scope="props">
+          <p>Tasks</p>
+          <ul>
+            <li v-for="(task, index) in props.row.tasks"><strong>{{ task.status }}</strong> : {{ task.count }}</li>
+          </ul>
+          <p>Issues</p>
+          <ul>
+            <li v-for="(issue, index) in props.row.issues"><strong>{{ issue.status }}</strong> : {{ issue.count }}</li>
+          </ul>
+         </template>         
+        </el-table-column>
         <el-table-column
           prop="name"
           label="Name"
