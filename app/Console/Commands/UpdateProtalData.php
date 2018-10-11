@@ -8,6 +8,14 @@ use App\Models\Issue;
 
 class UpdateProtalData extends Command
 {
+
+    protected $skipStatus = [
+      'done',
+      'closed',
+      'fixed',
+      'resolved'
+    ];
+
     /**
      * The name and signature of the console command.
      *
@@ -39,7 +47,12 @@ class UpdateProtalData extends Command
      */
     public function handle()
     {
-        Task::whereIn('task_status', ['on_hold', 'pending', 'in_progress'])->update(['created_at' => now()->toDateTimeString()]);
-        Issue::whereIn('issue_status', ['on_hold', 'pending', 'in_progress'])->update(['created_at' => now()->toDateTimeString()]);
+        Task::whereNotIn('task_status', $this->skipStatus)
+              ->whereDate('created_at', '!=', now()->toDateTimeString())
+              ->update(['created_at' => now()->toDateTimeString()]);
+
+        Issue::whereNotIn('issue_status', $this->skipStatus)
+               ->whereDate('created_at', '!=', now()->toDateTimeString())
+               ->update(['created_at' => now()->toDateTimeString()]);
     }
 }
