@@ -26,12 +26,13 @@ class TaskResource extends JsonResource
           'task_desc'             => $this->task_desc,
           'task_status'           => $this->task_status,
           'completion_precentage' => $this->completion_precentage,
-          'activity'         => $this->activity(),
+          'percentage_status'     => $this->percentageStatus(),
+          'activity'              => $this->activity(),
           'task_status_formated'  => ucwords(str_replace('_', ' ', $this->task_status)),
           'created_at'            => $this->created_at->toDateTimeString(),
           'started_date'          => $this->started_date,
           'closed_date'           => $this->closed_date,
-          'files' => $this->getUploadedFiles()
+          'files'                 => $this->getUploadedFiles()
         ];
     }
 }

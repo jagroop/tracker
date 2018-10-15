@@ -86,7 +86,7 @@
           label="Progress"
           sortable>
           <template slot-scope="scope">
-            <span>{{scope.row.completion_precentage}} %</span>
+            <el-progress :text-inside="true" :stroke-width="14" :status="scope.row.percentage_status" :percentage="scope.row.completion_precentage"></el-progress>
           </template>
         </el-table-column>
         <el-table-column
@@ -450,6 +450,7 @@
             task.task_name = data.task_name;
             task.activity = data.activity;
             task.completion_precentage = data.completion_precentage;
+            task.percentage_status = data.percentage_status;
             task.task_status = data.task_status; 
             task.task_status_formated = data.task_status_formated; 
             self.edit_task_dialog_show = false;

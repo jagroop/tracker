@@ -79,4 +79,15 @@ class Task extends Model implements HasMedia
         ];
       })->all(); 
   }
+
+  public function percentageStatus()
+  {
+      if($this->completion_precentage <= 30) {
+        return 'exception';
+      } elseif ($this->completion_precentage > 30 && $this->completion_precentage <= 60) {
+        return 'primary';
+      } elseif ($this->completion_precentage > 60 && $this->completion_precentage <= 100) {
+        return 'success';
+      }
+  }
 }
