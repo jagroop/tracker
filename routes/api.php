@@ -76,6 +76,10 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('v1/issues', 'Api\IssuesController', ['as' => 'api']);
 });
 
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::get('v1/logs', 'Api\TasksController@logs', ['as' => 'api']);
+});
+
 /*
 |--------------------------------------------------------------------------
 | File API Routes

@@ -9,6 +9,7 @@ use App\Http\Requests\TaskRequest;
 use App\Http\Requests\TaskCreateRequest;
 use App\Http\Requests\TaskUpdateRequest;
 use App\Http\Resources\TaskResource;
+use Spatie\Activitylog\Models\Activity;
 
 class TasksController extends Controller
 {
@@ -129,5 +130,18 @@ class TasksController extends Controller
         }
 
         return response()->json(['error' => 'Unable to delete task'], 500);
+    }
+
+    public function logs()
+    {
+        return Activity::whereDate('created_at', '>=', now()->subdays(3)->toDateString())->get()->map(function($activity){
+          return [
+            'title'            => $activity->description, 
+            'label'            => $activity->getExtraProperty('current_status'),
+            'created_at'       => $activity->created_at->format('d-M-Y h:m:i A'),
+            'created_at_human' => $activity->created_at->diffForhumans(),
+            'mine'             => $activity->causer_id == auth()->user()->id,
+          ];
+      })->all(); 
     }
 }

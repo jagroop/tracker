@@ -25,6 +25,10 @@
             <i class="el-icon-location"></i>
             <span slot="title">Users</span>
           </el-menu-item>
+          <el-menu-item index="logs">
+            <i class="el-icon-edit-outline"></i>
+            <span slot="title">Logs</span>
+          </el-menu-item>
         </el-menu>
         <!-- Aside ends -->
       </el-aside>

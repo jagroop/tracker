@@ -13,6 +13,7 @@ const SettingsPassword = () => import('~/pages/settings/password').then(m => m.d
 const Projects = () => import('~/pages/projects').then(m => m.default || m)
 const Tasks = () => import('~/pages/tasks').then(m => m.default || m)
 const Issues = () => import('~/pages/issues').then(m => m.default || m)
+const Logs = () => import('~/pages/activities').then(m => m.default || m)
 const Users = () => import('~/pages/users').then(m => m.default || m)
 
 export default [
@@ -28,6 +29,7 @@ export default [
   { path: '/projects', name: 'projects', component: Projects },
   { path: '/tasks', name: 'tasks', component: Tasks },
   { path: '/issues', name: 'issues', component: Issues },
+  { path: '/logs', name: 'logs', component: Logs },
   { path: '/users', name: 'users', component: Users },
   
   { path: '/settings',
