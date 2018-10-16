@@ -86,7 +86,7 @@
           label="Progress"
           sortable>
           <template slot-scope="scope">
-            <el-progress :text-inside="true" :stroke-width="14" :status="scope.row.percentage_status" :percentage="scope.row.completion_precentage"></el-progress>
+            <el-progress style="width: 55%" :text-inside="true" :stroke-width="14" :status="scope.row.percentage_status" :percentage="scope.row.completion_precentage"></el-progress>
           </template>
         </el-table-column>
         <el-table-column
