@@ -134,14 +134,23 @@ class TasksController extends Controller
 
     public function logs()
     {
-        return Activity::whereDate('created_at', '>=', now()->subdays(3)->toDateString())->get()->map(function($activity){
+        return Activity::whereDate('created_at', '>=', now()->subdays(23)->toDateString())->get()->map(function($activity){
+          
+          $subject = 'Deleted !!';
+
+          if(@$activity->subject->id) {
+            $subject = '#' . @$activity->subject->id .' '. (($activity->log_name == 'tasks') ? @$activity->subject->task_name : @$activity->subject->issue_name);
+          }
+
           return [
             'title'            => $activity->description, 
             'label'            => $activity->getExtraProperty('current_status'),
             'created_at'       => $activity->created_at->format('d-M-Y h:m:i A'),
             'created_at_human' => $activity->created_at->diffForhumans(),
             'mine'             => $activity->causer_id == auth()->user()->id,
+            'subject'          => $subject,
           ];
+
       })->all(); 
     }
 }

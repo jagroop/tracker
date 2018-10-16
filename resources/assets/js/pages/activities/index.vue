@@ -17,7 +17,12 @@
       :default-sort = "{prop: 'created_at', order: 'descending'}"
       :row-class-name="tableRowClassName"
       v-loading="table_loading"
-      style="width: 100%">       
+      style="width: 100%">    
+       <el-table-column
+          prop="subject"
+          label="Subject"
+          sortable>
+        </el-table-column>   
         <el-table-column
           prop="title"
           label="Activity"
