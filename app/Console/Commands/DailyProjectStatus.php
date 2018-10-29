@@ -42,13 +42,15 @@ class DailyProjectStatus extends Command
      */
     public function handle()
     {
+        $cc = ['jagroop.singh@kindlebit.com'];
         $now = now()->toDateTimeString();
         $past10Hours = now()->subHours(10)->toDateTimeString();  
         TaskResource::withoutWrapping();      
         $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->get();
         $tasks  = collect(TaskResource::collection($todayTasks))->sortBy('project_name');
+        $cc = array_unique(array_merge($cc, $tasks->pluck('assigned_to_email')->all()));
         if(count($todayTasks) > 0) {
-          Mail::to('ram.sharma@kindlebit.com')->cc('jagroop.singh@kindlebit.com')->send(new DailyStatus($tasks));
+          Mail::to('ram.sharma@kindlebit.com')->cc($cc)->send(new DailyStatus($tasks));
         }
     }
 }

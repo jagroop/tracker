@@ -1,21 +1,20 @@
 <?php
 namespace App\Helpers;
-
 class Tracker
 {
 
-  public static function sanitizeKeyword($keyword, $limit = false)
+  public static function ahref($text)
   {
-      $result = trim(preg_replace('/\s\s+/', ' ', str_replace("\n", " ", $keyword)));
-      if($limit !== false && $limit > 0) {
-        return str_limit($result, $limit, '...');
+      $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+      if(preg_match($reg_exUrl, $text, $url)) {
+       return preg_replace($reg_exUrl, '<a href="'.$url[0].'">'.$url[0].'</a>', $text);
       }
-      return $result;
+      return $text;
   }
 
-  public static function stringToArray($string)
+  public static function format($text)
   {
-      $clean = self::sanitizeKeyword($string);
-      return explode(' ', $clean);
+      return self::ahref($text);
   }
+  
 }

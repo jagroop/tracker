@@ -1,19 +1,23 @@
 <?php
-
 namespace App\Mail;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Helpers\Tracker;
-
 class DailyStatus extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $tasks;
-
+    public $css = [
+      'table'       => 'padding-top: 5px; padding-bottom: 5px; table-layout: fixed;width: 100%;border-collapse: collapse;',
+      'th'          => 'border: 1px solid blue; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;',
+      'td'          => 'border: 1px solid #999; word-wrap: break-word; padding: 5px;',
+      'red_color'   => 'background: #ffe3e3',
+      'green_color' => 'background: #d3f9d8',
+    ];
+    
+    public $tasks;
     /**
      * Create a new message instance.
      *
@@ -23,7 +27,6 @@ class DailyStatus extends Mailable
     {
         $this->tasks = $tasks;
     }
-
     /**
      * Build the message.
      *
@@ -31,26 +34,7 @@ class DailyStatus extends Mailable
      */
     public function build()
     {
-        $tasksCollection = $this->tasks->map(function($item){          
-          $value = [];
-          $value['project_name']         = $item['project_name'];
-          $value['assigned_to']          = $item['assigned_to'];
-          $value['task_name']            = Tracker::sanitizeKeyword($item['task_name'], $wordsLimit = 50);
-          $value['task_desc']            = Tracker::sanitizeKeyword($item['task_desc'], $wordsLimit = 120);
-          $value['completion_precentage'] = $item['completion_precentage'] . ' %';
-          $value['task_status_formated'] = $item['task_status_formated'];
-          return array_values($value);
-        })->toArray();
-
-        $tableBuilder = new \MaddHatter\MarkdownTable\Builder();
-            $tableBuilder->headers(['Project Name', 'Developer', 'Task', 'Description', 'Progress', 'Status'])
-            ->align(['C', 'L', 'L', 'L','C', 'C'])
-            ->rows($tasksCollection);
-
-        $table = $tableBuilder->render();
-
         return $this->subject('Daily Projects status.')
-            ->markdown('email.daily_status')
-            ->with('table',  $table);
+            ->view('email.daily_status');
     }
 }
