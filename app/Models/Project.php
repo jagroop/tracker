@@ -32,6 +32,7 @@ class Project extends Model implements HasMedia
         'status' => 'required',
     ];
 
+    // protected $dates = ['closed_date', 'started_date'];
     /**
      * Get Model uploaded media files
      * @return Array

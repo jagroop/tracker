@@ -51,7 +51,7 @@ class ProjectsController extends Controller
      */
     public function store(ProjectCreateRequest $request)
     {
-        $data = $request->only(['name', 'status']);        
+        $data = $request->only(['name', 'status', 'started_date', 'closed_date']);   
         $data['user_id'] = auth()->user()->id;
         $result = $this->service->create($data);
 

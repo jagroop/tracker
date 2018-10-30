@@ -27,11 +27,12 @@ class Task extends Model implements HasMedia
   		'task_desc',
   		'task_status',
   		'started_date',
-  		'closed_date',
+      'closed_date',
+  		'billing_hours',
   		'created_at',
   		'updated_at',
     ];
-
+    
     public static $rules = [
        'project_id' => 'required|exists:projects,id',
        'task_name' => 'required',

@@ -32,6 +32,14 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="started_date"
+          label="Started At">
+        </el-table-column>
+        <el-table-column
+          prop="closed_date"
+          label="Closed At">
+        </el-table-column>
+        <el-table-column
           prop="created_at"
           label="Created At">
         </el-table-column>
@@ -76,6 +84,24 @@
             <el-option label="Closed" value="closed"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="Start Date">
+          <el-date-picker
+            v-model="form.started_date"
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="Select start date and time">
+          </el-date-picker>
+          <has-error :form="form" field="started_date" />
+        </el-form-item>
+        <el-form-item label="Closed Date">
+          <el-date-picker
+            v-model="form.closed_date"
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="Select closed date and time">
+          </el-date-picker>
+          <has-error :form="form" field="closed_date" />
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="form.busy" @click="saveProject">Create</el-button>
         </el-form-item>
@@ -100,6 +126,24 @@
             <el-option label="On hold" value="on_hold"></el-option>
             <el-option label="Closed" value="closed"></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="Start Date">
+          <el-date-picker
+            v-model="edit_form.started_date"
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="Select start date and time">
+          </el-date-picker>
+          <has-error :form="edit_form" field="started_date" />
+        </el-form-item>
+        <el-form-item label="Closed Date">
+          <el-date-picker
+            v-model="edit_form.closed_date"
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="Select closed date and time">
+          </el-date-picker>
+          <has-error :form="edit_form" field="closed_date" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="edit_form.busy" @click="updateProject">Update</el-button>
@@ -165,11 +209,15 @@
         edit_project_dialog_show: false,
         form: new Form({
           name: '',
-          status: 'in_progress'
+          status: 'in_progress',
+          started_date: '',
+          closed_date: '',
         }),
         edit_form: new Form({
           name: '',
-          status: 'in_progress'
+          status: 'in_progress',
+          started_date: '',
+          closed_date: '',
         }),
       }
     },
@@ -225,6 +273,8 @@
             self.current_project.id = project.id;
             self.edit_form.name = project.name;
             self.edit_form.status = project.status;
+            self.edit_form.started_date = project.started_date;
+            self.edit_form.closed_date = project.closed_date;
             self.edit_project_dialog_show = true;
           }
         });
@@ -239,6 +289,8 @@
             project.name = data.name;
             project.status_formated = data.status_formated;
             project.status = data.status;
+            project.started_date = data.started_date;
+            project.closed_date = data.closed_date;
             self.edit_project_dialog_show = false;
           }
         });

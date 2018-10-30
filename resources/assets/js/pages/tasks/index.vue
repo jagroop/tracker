@@ -90,6 +90,10 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="billing_hours"
+          label="Billing Hours" sortable>
+        </el-table-column>
+        <el-table-column
           prop="assigned_to"
           label="Assigned To" sortable>
         </el-table-column>
@@ -151,6 +155,10 @@
           <el-input v-model="form.task_desc" type="textarea"></el-input>
           <has-error :form="form" field="task_desc" />
         </el-form-item>
+        <el-form-item label="Billing Hours">
+          <el-input v-model="form.billing_hours"></el-input>
+          <has-error :form="form" field="billing_hours" />
+        </el-form-item>
         <el-form-item label="Task status">
           <el-select v-model="form.task_status" placeholder="Select status">
             <el-option label="In Progress" value="in_progress"></el-option>
@@ -207,6 +215,10 @@
         <el-form-item label="Task Description">
           <el-input v-model="edit_form.task_desc" type="textarea"></el-input>
           <has-error :form="edit_form" field="task_desc" />
+        </el-form-item>
+        <el-form-item label="Billing Hours">
+          <el-input v-model="edit_form.billing_hours"></el-input>
+          <has-error :form="edit_form" field="billing_hours" />
         </el-form-item>
         <el-form-item label="Task status">
           <el-select v-model="edit_form.task_status" placeholder="Select status">
@@ -301,18 +313,20 @@
           assigned_by: '',
           assigned_to: '',
           task_name: '',
-          completion_precentage: '',
+          completion_precentage: 0,
           task_status: 'in_progress',
-          task_desc: ''
+          task_desc: '',
+          billing_hours: ''
         }),
         edit_form: new Form({
           project_id: '',
           assigned_by: '',
           assigned_to: '',
           task_name: '',
-          completion_precentage: '',
+          completion_precentage: 0,
           task_status: 'in_progress',
-          task_desc: ''
+          task_desc: '',
+          billing_hours: ''
         }),
         filters: {
           user_id: false,
@@ -397,18 +411,19 @@
       async saveTask() {
         var self = this;
         const { data } = await this.form.post('/api/v1/tasks');
-        if(self.form.assigned_by != self.form.assigned_to) {
-          WS.send(JSON.stringify({
-            receiver: self.form.assigned_to,
-            title: self.user.name + ' assigned a new task',
-            content: self.form.task_name
-          }));
-        }
+        // if(self.form.assigned_by != self.form.assigned_to) {
+        //   WS.send(JSON.stringify({
+        //     receiver: self.form.assigned_to,
+        //     title: self.user.name + ' assigned a new task',
+        //     content: self.form.task_name
+        //   }));
+        // }
         self.tasks.unshift(data);
         self.total_tasks++;
         self.form.assigned_by = '';
         self.form.assigned_to = '';
         self.form.task_desc = '';
+        self.form.billing_hours = '';
         self.form.task_name = '';
         self.form.completion_precentage = 0;
         self.form.task_status = 'in_progress';
@@ -425,6 +440,7 @@
             self.edit_form.assigned_to = task.assigned_to_id;
             self.edit_form.assigned_to_id = task.assigned_to;
             self.edit_form.task_desc = task.task_desc;
+            self.edit_form.billing_hours = task.billing_hours;
             self.edit_form.task_name = task.task_name;
             self.edit_form.completion_precentage = task.completion_precentage;
             self.edit_form.task_status = task.task_status; 
@@ -450,6 +466,7 @@
             task.task_name = data.task_name;
             task.activity = data.activity;
             task.completion_precentage = data.completion_precentage;
+            task.billing_hours = data.billing_hours;
             task.percentage_status = data.percentage_status;
             task.task_status = data.task_status; 
             task.task_status_formated = data.task_status_formated; 

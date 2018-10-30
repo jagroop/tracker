@@ -15,12 +15,14 @@ class ProjectResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'id' => $this->id,
-          'name' => $this->name,
-          'status' => $this->status,
+          'id'              => $this->id,
+          'name'            => $this->name,
+          'status'          => $this->status,
           'status_formated' => ucwords(str_replace('_', ' ', $this->status)),
-          'created_at' => $this->created_at->toDateTimeString(),
-          'files' => $this->getUploadedFiles()
+          'created_at'      => $this->created_at->toDateTimeString(),
+          'started_date'    => (string) $this->started_date,
+          'closed_date'     => (string) $this->closed_date,
+          'files'           => $this->getUploadedFiles()
         ];
     }
 }
