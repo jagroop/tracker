@@ -18,9 +18,28 @@ class TestController extends Controller
 {
     public function tasks()
     {
-      $task = Project::find(57);
-      $tasks = $task->workHours(true);
-      // return $tasks;
-      dd($tasks);
+        $now = now()->toDateTimeString();
+        $past10Hours = now()->subHours(10)->toDateTimeString();  
+        TaskResource::withoutWrapping();      
+        $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->get();
+        $tasks  = collect(TaskResource::collection($todayTasks))->sortBy('project_name');
+        dd($tasks);
+        die;
+        $now = now()->toDateTimeString();
+        $past10Hours = now()->subHours(10)->toDateTimeString();  
+        TaskResource::withoutWrapping();      
+        
+        $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->where(function($query){
+          return $query->where('task_status', 'done')->where('completion_precentage', '!=', 100);
+        })->orWhere(function($query){
+          return $query->where('task_status', 'in_progress')->where('work_hours', 0);
+        })->get();
+
+        $tasks  = collect(TaskResource::collection($todayTasks))->sortBy('project_name');
+        dd($tasks);
+        $cc = array_unique($tasks->pluck('assigned_to_email')->all());
+        if(count($todayTasks) > 0) {
+          Mail::to('jagroop.singh@kindlebit.com')->cc($cc)->send(new DailyStatus($tasks, $projectsStats));
+        }
     }
 }
