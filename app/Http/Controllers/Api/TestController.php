@@ -19,7 +19,7 @@ class TestController extends Controller
     public function tasks()
     {
       $task = Project::find(57);
-      $tasks = $task->billingHours();
+      $tasks = $task->workHours(true);
       // return $tasks;
       dd($tasks);
     }

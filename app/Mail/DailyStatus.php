@@ -18,14 +18,18 @@ class DailyStatus extends Mailable
     ];
     
     public $tasks;
+
+    public $stats;
+    
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($tasks)
+    public function __construct($tasks, $stats)
     {
         $this->tasks = $tasks;
+        $this->stats = $stats;
     }
     /**
      * Build the message.

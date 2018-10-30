@@ -25,5 +25,35 @@
     </tbody>
 </table>
 <br>
+<hr>
+<h3>All running Projects Status</h3>
+<br>
+<table style="{{ $css['table'] }}">
+  <thead>
+    <tr>
+      <th style="{{ $css['th'] }}" width="10%">Project</th>
+      <th style="{{ $css['th'] }}" width="10%">Status</th>
+      <th style="{{ $css['th'] }}" width="10%">Total Billing Hours</th>
+      <th style="{{ $css['th'] }}" width="10%">Today Billing Hours</th>
+      <th style="{{ $css['th'] }}" width="10%">Total Work Hours</th>
+      <th style="{{ $css['th'] }}" width="10%">Today Work Hours</th>
+    </tr>
+  </thead>
+    <tbody>
+      @foreach($stats as $stat)
+      <tr style="{{ ($stat['work_hours_today'] <= 0) ? $css['red_color'] : '' }}">
+        <td style="{{ $css['td'] }}">{{ $stat['name'] }}</td>
+        <td style="{{ $css['td'] }}">{{ $stat['status'] }}</td>
+        <td style="{{ $css['td'] }}">{{ $stat['billing_hours'] }}</td>
+        <td style="{{ $css['td'] }}">{{ $stat['billing_hours_today'] }}</td>
+        <td style="{{ $css['td'] }}">{{ $stat['work_hours'] }}</td>
+        <td style="{{ $css['td'] }}">{{ $stat['work_hours_today'] }}</td>
+      </tr>
+      @endforeach
+    </tbody>
+</table>
+<br>
+<p><strong>Note:</strong> Total <u>Billing and Work Hours</u> will be counted from 30-Oct-2018</p>
+<br>
 Thanks,<br>
 Jagroop Singh

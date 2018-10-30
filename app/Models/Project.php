@@ -53,13 +53,17 @@ class Project extends Model implements HasMedia
         return $this->hasMany(Task::class, 'project_id', 'id');
     }
 
-    public function billingHours()
+    public function billingHours($today = false)
     {
-      return $this->tasks()->sum('billing_hours');
+      return $this->tasks()->when($today, function($q){
+        return $q->whereDate('created_at', now()->toDateString());
+      })->sum('billing_hours');
     }
 
-    public function workHours()
+    public function workHours($today = false)
     {
-      return $this->tasks()->sum('work_hours');
+      return $this->tasks()->when($today, function($q){
+        return $q->whereDate('created_at', now()->toDateString());
+      })->sum('work_hours');
     }
 }
