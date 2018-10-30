@@ -23,6 +23,7 @@ class TestController extends Controller
         TaskResource::withoutWrapping();      
         $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->get();
         $tasks  = collect(TaskResource::collection($todayTasks))->sortBy('project_name');
+        return $tasks;
         dd($tasks);
         die;
         $now = now()->toDateTimeString();
