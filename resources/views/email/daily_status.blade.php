@@ -33,10 +33,10 @@
     <tr>
       <th style="{{ $css['th'] }}" width="10%">Project</th>
       <th style="{{ $css['th'] }}" width="10%">Status</th>
-      <th style="{{ $css['th'] }}" width="10%">Total Billing Hours</th>
-      <th style="{{ $css['th'] }}" width="10%">Today Billing Hours</th>
-      <th style="{{ $css['th'] }}" width="10%">Total Work Hours</th>
-      <th style="{{ $css['th'] }}" width="10%">Today Work Hours</th>
+      <th style="{{ $css['th'] }}" width="20%">Total Billing Hours</th>
+      <th style="{{ $css['th'] }}" width="20%">Today Billing Hours</th>
+      <th style="{{ $css['th'] }}" width="20%">Total Work Hours</th>
+      <th style="{{ $css['th'] }}" width="20%">Today Work Hours</th>
     </tr>
   </thead>
     <tbody>
