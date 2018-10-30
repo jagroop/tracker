@@ -58,7 +58,7 @@ class DailyProjectStatus extends Command
     {
         $cc = ['jagroop.singh@kindlebit.com'];
         $now = now()->toDateTimeString();
-        $past10Hours = now()->subHours(10)->toDateTimeString();  
+        $past10Hours = now()->subHours(12)->toDateTimeString();  
         TaskResource::withoutWrapping();      
         $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->get();
         $tasks  = collect(TaskResource::collection($todayTasks))->sortBy('project_name');
