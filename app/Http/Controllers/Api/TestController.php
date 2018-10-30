@@ -19,7 +19,7 @@ class TestController extends Controller
     public function tasks()
     {
         $now = now()->toDateTimeString();
-        $past10Hours = now()->subHours(10)->toDateTimeString();
+        $past10Hours = now()->subHours(15)->toDateTimeString();
         TaskResource::withoutWrapping();      
         $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->get();
         $tasks  = collect(TaskResource::collection($todayTasks))->sortBy('project_name');
