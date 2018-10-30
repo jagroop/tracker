@@ -46,6 +46,8 @@
           <template slot-scope="props">
             <p><strong>Description:</strong> {{ props.row.task_desc }}</p>
             <p><strong>Assigned By:</strong> {{ props.row.assigned_by }}</p>
+            <p><strong>Billing Hours:</strong> {{ props.row.billing_hours }}</p>
+            <p><strong>Work Hours:</strong> {{ props.row.work_hours }}</p>
             <p><strong>Activity Logs:</strong> </p>
             <el-breadcrumb separator-class="el-icon-arrow-right">
               <el-breadcrumb-item v-for="(activity, ind) in props.row.activity" :key="ind" :title="activity.created_at +' | '+activity.created_at_human">{{ activity.label }}</el-breadcrumb-item>
@@ -88,10 +90,6 @@
           <template slot-scope="scope">
             <el-progress style="width: 55%" :text-inside="true" :stroke-width="14" :status="scope.row.percentage_status" :percentage="scope.row.completion_precentage"></el-progress>
           </template>
-        </el-table-column>
-        <el-table-column
-          prop="billing_hours"
-          label="Billing Hours" sortable>
         </el-table-column>
         <el-table-column
           prop="assigned_to"
@@ -159,6 +157,10 @@
           <el-input v-model="form.billing_hours"></el-input>
           <has-error :form="form" field="billing_hours" />
         </el-form-item>
+        <el-form-item label="Work Hours">
+          <el-input v-model="form.work_hours"></el-input>
+          <has-error :form="form" field="work_hours" />
+        </el-form-item>
         <el-form-item label="Task status">
           <el-select v-model="form.task_status" placeholder="Select status">
             <el-option label="In Progress" value="in_progress"></el-option>
@@ -219,6 +221,10 @@
         <el-form-item label="Billing Hours">
           <el-input v-model="edit_form.billing_hours"></el-input>
           <has-error :form="edit_form" field="billing_hours" />
+        </el-form-item>
+        <el-form-item label="Work Hours">
+          <el-input v-model="edit_form.work_hours"></el-input>
+          <has-error :form="edit_form" field="work_hours" />
         </el-form-item>
         <el-form-item label="Task status">
           <el-select v-model="edit_form.task_status" placeholder="Select status">
@@ -316,7 +322,8 @@
           completion_precentage: 0,
           task_status: 'in_progress',
           task_desc: '',
-          billing_hours: ''
+          billing_hours: '',
+          work_hours: ''
         }),
         edit_form: new Form({
           project_id: '',
@@ -326,6 +333,7 @@
           completion_precentage: 0,
           task_status: 'in_progress',
           task_desc: '',
+          work_hours: '',
           billing_hours: ''
         }),
         filters: {
@@ -424,6 +432,7 @@
         self.form.assigned_to = '';
         self.form.task_desc = '';
         self.form.billing_hours = '';
+        self.form.work_hours = '';
         self.form.task_name = '';
         self.form.completion_precentage = 0;
         self.form.task_status = 'in_progress';
@@ -441,6 +450,7 @@
             self.edit_form.assigned_to_id = task.assigned_to;
             self.edit_form.task_desc = task.task_desc;
             self.edit_form.billing_hours = task.billing_hours;
+            self.edit_form.work_hours = task.work_hours;
             self.edit_form.task_name = task.task_name;
             self.edit_form.completion_precentage = task.completion_precentage;
             self.edit_form.task_status = task.task_status; 
@@ -467,6 +477,7 @@
             task.activity = data.activity;
             task.completion_precentage = data.completion_precentage;
             task.billing_hours = data.billing_hours;
+            task.work_hours = data.work_hours;
             task.percentage_status = data.percentage_status;
             task.task_status = data.task_status; 
             task.task_status_formated = data.task_status_formated; 

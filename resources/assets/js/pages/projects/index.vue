@@ -28,6 +28,11 @@
           sortable>
         </el-table-column>
         <el-table-column
+          prop="work_hours"
+          label="Work Hours"
+          sortable>
+        </el-table-column>
+        <el-table-column
           prop="status_formated"
           label="Status" sortable>
           <template slot-scope="scope">

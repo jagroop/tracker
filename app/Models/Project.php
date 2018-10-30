@@ -57,4 +57,9 @@ class Project extends Model implements HasMedia
     {
       return $this->tasks()->sum('billing_hours');
     }
+
+    public function workHours()
+    {
+      return $this->tasks()->sum('work_hours');
+    }
 }

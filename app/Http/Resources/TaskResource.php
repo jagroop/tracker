@@ -31,6 +31,7 @@ class TaskResource extends JsonResource
           'percentage_status'     => $this->percentageStatus(),
           'activity'              => $this->activity(),
           'billing_hours'         => (trim($this->billing_hours) == '') ? 0 : $this->billing_hours,
+          'work_hours'            => (trim($this->work_hours) == '') ? 0 : $this->work_hours,
           'task_status_formated'  => ucwords(str_replace('_', ' ', $this->task_status)),
           'created_at'            => $this->created_at->toDateTimeString(),
           'started_date'          => $this->started_date,
