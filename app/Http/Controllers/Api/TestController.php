@@ -18,9 +18,9 @@ class TestController extends Controller
 {
     public function tasks()
     {
-      $task = User::find(1);
-      $tasks = $task->usersTasks();
-      return $tasks;
+      $task = Project::find(57);
+      $tasks = $task->billingHours();
+      // return $tasks;
       dd($tasks);
     }
 }

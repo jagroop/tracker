@@ -47,4 +47,14 @@ class Project extends Model implements HasMedia
           return $data;
         });
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'project_id', 'id');
+    }
+
+    public function billingHours()
+    {
+      return $this->tasks()->sum('billing_hours');
+    }
 }

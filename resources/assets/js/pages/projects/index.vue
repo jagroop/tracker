@@ -23,6 +23,11 @@
           sortable>
         </el-table-column>
         <el-table-column
+          prop="billing_hours"
+          label="Billing Hours"
+          sortable>
+        </el-table-column>
+        <el-table-column
           prop="status_formated"
           label="Status" sortable>
           <template slot-scope="scope">

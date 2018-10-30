@@ -22,6 +22,7 @@ class ProjectResource extends JsonResource
           'created_at'      => $this->created_at->toDateTimeString(),
           'started_date'    => (string) $this->started_date,
           'closed_date'     => (string) $this->closed_date,
+          'billing_hours'   => (string) $this->billingHours(),
           'files'           => $this->getUploadedFiles()
         ];
     }
