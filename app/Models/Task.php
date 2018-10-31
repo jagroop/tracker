@@ -41,7 +41,7 @@ class Task extends Model implements HasMedia
     public static $rules = [
        'project_id' => 'required|exists:projects,id',
        'assigned_by' => 'required|exists:users,id',
-       'assigned_to' => 'required|exists:users,id',
+       // 'assigned_to' => 'required|exists:users,id',
        'task_name' => 'required',
        'task_desc' => 'required',
        'work_hours' => 'numeric|max:7|min:0',
