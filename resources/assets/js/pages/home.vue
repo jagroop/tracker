@@ -61,9 +61,9 @@
     mounted() {
         var vm = this;
         this.loadUsers(1);
-        setInterval(function(){ 
-          vm.loadUsers(1);
-        }, 5000);
+        // setInterval(function(){ 
+        //   vm.loadUsers(1);
+        // }, 5000);
     },
     computed: mapGetters({
       user: 'auth/user'

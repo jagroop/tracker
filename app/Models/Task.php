@@ -17,6 +17,8 @@ class Task extends Model implements HasMedia
 
     public $timestamps = true;
 
+    public $dates = ['hours_updated_at'];
+    
     public $fillable = [
   		'id',
   		'project_id',
@@ -31,6 +33,7 @@ class Task extends Model implements HasMedia
       'billing_hours',
       'work_hours',
   		'total_work_hours',
+      'hours_updated_at',
   		'created_at',
   		'updated_at',
     ];
@@ -39,7 +42,7 @@ class Task extends Model implements HasMedia
        'project_id' => 'required|exists:projects,id',
        'task_name' => 'required',
        'task_desc' => 'required',
-       // 'assigned_to' => 'required|exists:users,id',
+       'work_hours' => 'numeric|max:7|min:0',
        'task_status' => 'required',
     ];
 
