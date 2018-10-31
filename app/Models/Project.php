@@ -62,8 +62,9 @@ class Project extends Model implements HasMedia
 
     public function workHours($today = false)
     {
+      $sumBy = ($today) ? 'work_hours' : 'total_work_hours'
       return $this->tasks()->when($today, function($q){
         return $q->whereDate('created_at', now()->toDateString());
-      })->sum('work_hours');
+      })->sum($sumBy);
     }
 }
