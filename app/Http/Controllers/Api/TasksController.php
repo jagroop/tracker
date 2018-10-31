@@ -53,6 +53,7 @@ class TasksController extends Controller
         if(trim($request->input('assigned_to')) == '') {
           $data['assigned_to'] = auth()->user()->id;
         }
+        $data['total_work_hours'] = $data['work_hours'];
         $result = $this->service->create($data);
 
         if ($result) {
@@ -95,8 +96,9 @@ class TasksController extends Controller
     public function update(TaskUpdateRequest $request, $id)
     {        
         $task = $this->service->find($id);
-        $result = $this->service->update($id, $request->except(['index']));
-
+        $data = $request->except(['index']);
+        $data['total_work_hours'] = $task->work_hours + $data['work_hours'];
+        $result = $this->service->update($id, $data);
         if ($result) {
             
             if($task->task_status != $request->task_status) {

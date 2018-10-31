@@ -37,6 +37,7 @@ class TaskResource extends JsonResource
           'created_at'            => $this->created_at->toDateTimeString(),
           'started_date'          => $this->started_date,
           'closed_date'           => $this->closed_date,
+          'disable_work_hours'    => ($this->work_hours > 0 && $this->created_at->toDateString() == now()->toDateString()) ? true : false,
           'files'                 => $this->getUploadedFiles()
         ];
     }

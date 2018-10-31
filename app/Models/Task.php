@@ -29,7 +29,8 @@ class Task extends Model implements HasMedia
   		'started_date',
       'closed_date',
       'billing_hours',
-  		'work_hours',
+      'work_hours',
+  		'total_work_hours',
   		'created_at',
   		'updated_at',
     ];

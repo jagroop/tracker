@@ -223,7 +223,7 @@
           <has-error :form="edit_form" field="billing_hours" />
         </el-form-item>
         <el-form-item label="Work Hours">
-          <el-input v-model="edit_form.work_hours"></el-input>
+          <el-input v-model="edit_form.work_hours" :disabled="edit_form.disable_work_hours"></el-input>
           <has-error :form="edit_form" field="work_hours" />
         </el-form-item>
         <el-form-item label="Task status">
@@ -334,6 +334,7 @@
           task_status: 'in_progress',
           task_desc: '',
           work_hours: '',
+          disable_work_hours: false,
           billing_hours: ''
         }),
         filters: {
@@ -454,6 +455,7 @@
             self.edit_form.task_name = task.task_name;
             self.edit_form.completion_precentage = task.completion_precentage;
             self.edit_form.task_status = task.task_status; 
+            self.edit_form.disable_work_hours = task.disable_work_hours; 
             self.edit_task_dialog_show = true;
           }
         });
@@ -464,7 +466,7 @@
         const { data } = await this.edit_form.patch('/api/v1/tasks/'+self.current_task.id);
         self.tasks.forEach((task) => {
           if(task.id === task_id) {
-            console.log(data.task_status, 'status ..');
+            // console.log(data.task_status, 'status ..');
             task.status_formated = data.status_formated;
             task.project_id = data.project_id;
             task.project_name = data.project_name;
@@ -478,6 +480,7 @@
             task.completion_precentage = data.completion_precentage;
             task.billing_hours = data.billing_hours;
             task.work_hours = data.work_hours;
+            task.disable_work_hours = data.disable_work_hours;
             task.percentage_status = data.percentage_status;
             task.task_status = data.task_status; 
             task.task_status_formated = data.task_status_formated; 
