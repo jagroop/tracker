@@ -49,7 +49,7 @@ class UpdateProtalData extends Command
     {
         Task::whereNotIn('task_status', $this->skipStatus)
               ->whereDate('created_at', '!=', now()->toDateTimeString())
-              ->update(['created_at' => now()->toDateTimeString()]);
+              ->update(['work_hours' => 0, 'created_at' => now()->toDateTimeString()]);
 
         Issue::whereNotIn('issue_status', $this->skipStatus)
                ->whereDate('created_at', '!=', now()->toDateTimeString())

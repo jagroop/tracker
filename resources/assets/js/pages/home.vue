@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="12">
     <div v-for="(user, index) in users" v-if="user.active && user.all_tasks.length">
-      <el-col :span="5" style="padding-bottom: 10px;">
+      <el-col :span="6" style="padding-bottom: 10px;">
         <el-card class="box-card" style="height: 406px; overflow-y: scroll;">
           <div slot="header" class="clearfix">
             <span>{{ user.name }}</span>
