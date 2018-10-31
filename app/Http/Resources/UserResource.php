@@ -17,12 +17,14 @@ class UserResource extends JsonResource
         return [
           'id'            => $this->id,
           'name'          => $this->name,
+          'active'          => $this->active,
           'email'         => $this->email,
           'role'          => $this->role,
           'total_tasks'   => $this->todayTasks->count(),
           'total_issues'  => $this->todayIssues->count(),
           'tasks'         => $this->usersTasks(),
-          'issues'         => $this->usersIssues(),
+          'all_tasks'     => TaskResource::collection($this->todayTasks),
+          'issues'        => $this->usersIssues(),
           'role_formated' => ucwords(str_replace('_', ' ', $this->role)),
           'created_at'    => $this->created_at->toDateTimeString()
         ];

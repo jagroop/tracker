@@ -25,6 +25,7 @@ class TaskResource extends JsonResource
           'assigned_by_email'     => $this->assignedBy->email,
           'assigned_by_id'        => $this->assigned_by,
           'task_name'             => $this->task_name,
+          'task_name_short'       => str_limit($this->task_name, 20),
           'task_desc'             => $this->task_desc,
           'task_status'           => $this->task_status,
           'completion_precentage' => (int) $this->completion_precentage,
