@@ -223,7 +223,7 @@
           <has-error :form="edit_form" field="billing_hours" />
         </el-form-item>
         <el-form-item label="Work Hours">
-          <el-input v-model="edit_form.work_hours" :disabled="edit_form.disable_work_hours"></el-input>
+          <el-input v-model="edit_form.work_hours" :disabled="edit_form.disable_work_hours || edit_form.disable_check"></el-input>
           <has-error :form="edit_form" field="work_hours" />
         </el-form-item>
         <el-form-item label="Task status">
@@ -335,6 +335,7 @@
           task_desc: '',
           work_hours: '',
           disable_work_hours: false,
+          disable_check: false,
           billing_hours: ''
         }),
         filters: {
@@ -456,6 +457,7 @@
             self.edit_form.completion_precentage = task.completion_precentage;
             self.edit_form.task_status = task.task_status; 
             self.edit_form.disable_work_hours = task.disable_work_hours; 
+            self.edit_form.disable_check = task.disable_check; 
             self.edit_task_dialog_show = true;
           }
         });
@@ -481,6 +483,7 @@
             task.billing_hours = data.billing_hours;
             task.work_hours = data.work_hours;
             task.disable_work_hours = data.disable_work_hours;
+            task.disable_check = data.disable_check;
             task.percentage_status = data.percentage_status;
             task.task_status = data.task_status; 
             task.task_status_formated = data.task_status_formated; 
