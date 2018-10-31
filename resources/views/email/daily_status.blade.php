@@ -1,5 +1,7 @@
 <p>Hello Sir, Good Evening ... here is the list of tasks team members worked on today.</p>
-
+<br>
+<h3>Tasks</h3>
+<br>
 <table style="{{ $css['table'] }}">
   <thead>
     <tr>
@@ -26,7 +28,7 @@
 </table>
 <br>
 <hr>
-<h3>All running Projects Status</h3>
+<h3>Projects Working and Billing Hours</h3>
 <br>
 <table style="{{ $css['table'] }}">
   <thead>
