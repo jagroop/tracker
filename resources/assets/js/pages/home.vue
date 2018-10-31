@@ -1,13 +1,13 @@
 <template>
   <el-row :gutter="12">
-    <div v-for="(user, index) in users" v-if="user.active">
+    <div v-for="(user, index) in users" v-if="user.active && user.all_tasks.length" style="padding-bottom: 10px;">
       <el-col :span="5">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>{{ user.name }}</span>
           </div>
           <div v-for="(task ,index, key) in user.all_tasks" :key="key" class="text item" style="padding-bottom: 20px;">
-            <span :title="task.task_name">{{ task.task_name_short }}
+            <span :title="task.project_name+ ' | ' + task.task_name">{{ task.task_name_short }}
               <el-badge :value="task.work_hours" class="item">
                 <el-tag :type="statuses[task.task_status]" size="mini" disable-transitions>{{task.task_status_formated}}</el-tag>
               </el-badge>

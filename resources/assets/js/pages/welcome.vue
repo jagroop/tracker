@@ -18,9 +18,9 @@
 
     <div class="text-center">
       <div class="title mb-4">
-        {{ title }}
+        Tracker
       </div>
-      <img src="{{ asset('images/scrum.png') }}" alt="">
+      <img src="/images/scrum.png" alt="">
       <p>by @jagroop</p>
     </div>
   </div>
