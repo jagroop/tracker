@@ -33,11 +33,11 @@ class Kernel extends ConsoleKernel
          });
 
         // 6:40 PM -> 18:40        
-        $schedule->command('pms:status_invalid')
-         ->at('18:40')
-         ->when(function(){
-          return !now()->isWeekend();
-         });
+        // $schedule->command('pms:status_invalid')
+        //  ->at('18:40')
+        //  ->when(function(){
+        //   return !now()->isWeekend();
+        //  });
 
          // 9:00 PM -> 09:30        
         $schedule->command('pms:update_data')
