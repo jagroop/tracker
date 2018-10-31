@@ -1,5 +1,6 @@
 <template>
   <el-row :gutter="12">
+    <el-button @click="loadUsers(1)" type="primary" icon="el-icon-refresh"></el-button>
     <div v-for="(user, index) in users" v-if="user.active && user.all_tasks.length">
       <el-col :span="6" style="padding-bottom: 10px;">
         <el-card class="box-card" style="height: 406px; overflow-y: scroll;">
