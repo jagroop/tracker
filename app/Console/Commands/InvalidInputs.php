@@ -48,7 +48,7 @@ class InvalidInputs extends Command
         TaskResource::withoutWrapping();
         $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->where(function($query){
           return $query->where('task_status', 'done')->where('completion_precentage', '!=', 100);
-        })->where(function($query){
+        })->orWhere(function($query){
           return $query->whereIn('task_status', ['in_progress', 'done', 'feedback', 'deployed'])->where(function($q){
             return $q->whereNull('work_hours')->orWhere('work_hours', '<=', 0);
           });
