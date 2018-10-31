@@ -322,8 +322,8 @@
           completion_precentage: 0,
           task_status: 'in_progress',
           task_desc: '',
-          billing_hours: '',
-          work_hours: ''
+          billing_hours: 0,
+          work_hours: 0
         }),
         edit_form: new Form({
           project_id: '',
