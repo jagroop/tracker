@@ -20,6 +20,7 @@
       <div class="title mb-4">
         {{ title }}
       </div>
+      <img src="{{ asset('images/scrum.png') }}" alt="">
       <p>by @jagroop</p>
     </div>
   </div>
