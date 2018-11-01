@@ -102,7 +102,7 @@ class TasksController extends Controller
     {        
         $task = $this->service->find($id);
         $data = $request->except(['index']);
-        $data['total_work_hours'] = $task->work_hours + $data['work_hours'];
+        $data['total_work_hours'] = $task->total_work_hours + $data['work_hours'];
 
         if($data['work_hours'] != $task->work_hours && $data['work_hours'] > 0) {
           $data['hours_updated_at'] = now()->toDateTimeString();
