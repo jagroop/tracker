@@ -8,7 +8,8 @@
       <th style="{{ $css['th'] }}" width="10%">Project</th>
       <th style="{{ $css['th'] }}" width="10%">Developer</th>
       <th style="{{ $css['th'] }}" width="20%">Task</th>
-      <th style="{{ $css['th'] }}" width="45%">Description</th>
+      <th style="{{ $css['th'] }}" width="40%">Description</th>
+      <th style="{{ $css['th'] }}" width="5%">Hours</th>
       <th style="{{ $css['th'] }}" width="10%">Status</th>
       <th style="{{ $css['th'] }}" width="5%">Progress</th>
     </tr>
@@ -20,6 +21,7 @@
         <td style="{{ $css['td'] }}">{{ $task['assigned_to'] }}</td>
         <td style="{{ $css['td'] }}">{{ $task['task_name'] }}</td>
         <td style="{{ $css['td'] }}">{!! App\Helpers\Tracker::format($task['task_desc']) !!}</td>
+        <td style="{{ $css['td'] }}">{{ $task['work_hours'] }}</td>
         <td style="{{ $css['td'] }}">{{ $task['task_status_formated'] }}</td>
         <td style="{{ $css['td'] }}">{{ $task['completion_precentage'] }}%</td>
       </tr>
