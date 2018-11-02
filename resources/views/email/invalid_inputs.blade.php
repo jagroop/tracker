@@ -1,4 +1,4 @@
-<p>Hello Team ... below tasks have invalid inputs.</p>
+<p>Hello ... below tasks have invalid inputs.</p>
 <br>
 <p>Please cross check if <b>Task status</b> , <b>Completion percentage</b> , and <b>Work hours</b> are properly filled.</p>
 <br>
