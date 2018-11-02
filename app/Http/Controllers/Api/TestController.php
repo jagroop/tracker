@@ -41,5 +41,6 @@ class TestController extends Controller
         if(count($todayTasks) > 0) {
           Mail::to('jagroop.singh@kindlebit.com')->send(new DailyStatus($tasks, $projectsStats));
         }
+        die('Done');
     }
 }
