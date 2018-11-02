@@ -15,7 +15,7 @@
   </thead>
     <tbody>
       @foreach($tasks as $task)
-      <tr style="{{ ($task['completion_precentage'] == 100 && $task['task_status'] == 'done') ? $css['green_color'] : '' }}">
+      <tr style="{{ ($task['task_status'] == 'done') ? $css['green_color'] : '' }}">
         <td style="{{ $css['td'] }}">{{ $task['project_name'] }}</td>
         <td style="{{ $css['td'] }}">{{ $task['assigned_to'] }}</td>
         <td style="{{ $css['td'] }}">{{ $task['task_name'] }}</td>

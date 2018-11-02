@@ -44,15 +44,15 @@ class InvalidInputs extends Command
     public function handle()
     {
         $now = now()->toDateTimeString();
-        $past10Hours = now()->subHours(10)->toDateTimeString();  
+        $past10Hours = now()->subHours(12)->toDateTimeString();  
         TaskResource::withoutWrapping();
+        
         $todayTasks = Task::whereBetween('created_at', [$past10Hours, $now])->where(function($query){
-          return $query->where('task_status', 'done')->where('completion_precentage', '!=', 100);
-        })->orWhere(function($query){
           return $query->whereIn('task_status', ['in_progress', 'done', 'feedback', 'deployed'])->where(function($q){
             return $q->whereNull('work_hours')->orWhere('work_hours', '<=', 0);
           });
         })->get();
+
         $tasks  = collect(TaskResource::collection($todayTasks))->sortBy('project_name');      
         $cc = array_unique($tasks->pluck('assigned_to_email')->all());
         if(count($todayTasks) > 0) {

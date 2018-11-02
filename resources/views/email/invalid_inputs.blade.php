@@ -1,4 +1,6 @@
-<p>Hi, Good Evening ... below tasks have invalid inputs ( completion percentage , work hours ) . Please cross check.</p>
+<p>Hello Team ... below tasks have invalid inputs.</p>
+<br>
+<p>Please cross check if <b>Task status</b> , <b>Completion percentage</b> , and <b>Work hours</b> are properly filled.</p>
 <br>
 <h3>Tasks</h3>
 <br>
