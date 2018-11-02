@@ -27,7 +27,8 @@ class TestController extends Controller
     }
 
     public function tasks()
-    {        
+    {     
+        die('here')   
         $cc = ['jagroop.singh@kindlebit.com'];
         $now = now()->toDateTimeString();
         $past10Hours = now()->subHours(12)->toDateTimeString();  
