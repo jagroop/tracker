@@ -26,9 +26,7 @@ class TestController extends Controller
     }
 
     public function tasks()
-    {
-        ini_set('display_errors', 'On');
-        error_reporting(E_ALL | E_STRICT);
+    {        
         $cc = ['jagroop.singh@kindlebit.com'];
         $now = now()->toDateTimeString();
         $past10Hours = now()->subHours(12)->toDateTimeString();  
@@ -38,6 +36,7 @@ class TestController extends Controller
         $projectIds = array_unique($tasks->pluck('project_id')->all());
         $projectsStats = $this->projectsStats($projectIds);
         $cc = array_unique(array_merge($cc, $tasks->pluck('assigned_to_email')->all()));
+        die('here');
         if(count($todayTasks) > 0) {
           Mail::to('jagroop.singh@kindlebit.com')->send(new DailyStatus($tasks, $projectsStats));
         }
