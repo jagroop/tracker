@@ -31,6 +31,7 @@
     </tbody>
 </table>
 <br>
+<p><b>Note:</b> You have only <i>20 minutes</i> to make the changes.</p>
 <br>
 Thanks,<br>
 Jagroop Singh
