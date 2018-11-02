@@ -8,6 +8,7 @@ use App\Mail\DailyStatus;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\TaskCollection;
+use App\Http\Controllers\Controller;
 
 class TestController extends Controller
 {
