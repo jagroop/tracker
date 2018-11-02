@@ -37,7 +37,6 @@ class TestController extends Controller
         $projectIds = array_unique($tasks->pluck('project_id')->all());
         $projectsStats = $this->projectsStats($projectIds);
         $cc = array_unique(array_merge($cc, $tasks->pluck('assigned_to_email')->all()));
-        die('here');
         if(count($todayTasks) > 0) {
           Mail::to('jagroop.singh@kindlebit.com')->send(new DailyStatus($tasks, $projectsStats));
         }
