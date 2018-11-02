@@ -18,7 +18,7 @@
   </thead>
     <tbody>
       @foreach($tasks as $task)
-      <tr>
+      <tr style="{{ ($task['task_status'] == 'done') ? $css['red_color'] : '' }}">
         <td style="{{ $css['td'] }}">{{ $task['project_name'] }}</td>
         <td style="{{ $css['td'] }}">{{ $task['assigned_to'] }}</td>
         <td style="{{ $css['td'] }}">{{ $task['task_name'] }}</td>
