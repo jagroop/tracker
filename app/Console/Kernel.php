@@ -26,11 +26,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // 7 PM -> 19:00
-        // $schedule->command('pms:status_update')
-        //  ->at('19:00')
-        //  ->when(function(){
-        //   return !now()->isWeekend();
-        //  });
+        $schedule->command('pms:status_update')
+         ->at('19:00')
+         ->when(function(){
+          return !now()->isWeekend();
+         });
 
         // 6:40 PM -> 18:40        
         $schedule->command('pms:status_invalid')
